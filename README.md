@@ -8,7 +8,7 @@
   - Ahmet Emre Zengin
   
 ## Description  
-   Rush hour is a single player game where the player tries to move obstacles that are blocking the way for their car. The game is played on a square field consisting random obstacles (all sorts of vehicles) and the players car. The game is played by moving every vehicle vertically or horizontally depending on how they placed inside the field. The square field has a single opening where our car can pass and the main aim is to clear a path and pass our car through this opening. The player receives a score depending on how many moves they used to finish the game and how quick they were. 
+   Rush hour is a single player game where the player tries to move obstacles that are blocking the way of their car. The game is played on a square field consisting random obstacles (all sorts of vehicles) and the player's car. The game is played by moving every vehicle vertically or horizontally depending on how they are placed inside the field. The square field has a single opening where our car can pass through and the main aim is to clear a path and pass our car through this opening. Player receives a score depending on how many moves they used to finish the game and how quick they were. 
    
    
    This game is a implementation of the board game Rush Hour
