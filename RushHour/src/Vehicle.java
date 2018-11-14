@@ -15,7 +15,7 @@ public class Vehicle {
      * Constructor. Takes no parameters and initializes the coordinates
      * and length as zero.
      */
-    Vehicle() {
+    Vehicle(){
         x = 0;
         y = 0;
         length = 0;

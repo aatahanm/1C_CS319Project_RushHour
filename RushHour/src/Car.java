@@ -11,41 +11,41 @@ public class Car extends Vehicle {
     private int length;
     private String direction;
 
-    Car () {
+    Car (){
         super();
     }
 
-    public void createVehicle( int x, int y, int length, String direction) {
+    public void createVehicle(int x,int y,int length,String direction){
         this.x = x;
         this.y = y;
         this.length = length;
         this.direction = direction;
     }
 
-    public void moveTo( int x, int y) {
-        if ( this.x >= x)
+    public void moveTo(int x, int y){
+        if (this.x >= x)
             this.x = x;
         else
             this.x++;
-        if( this.y >= y)
+        if(this.y >= y)
             this.y = y;
         else
             this.y++;
     }
 
-    public String getDirection() {
+    public String getDirection(){
         return direction;
     }
 
-    public int getLength() {
+    public int getLength(){
         return length;
     }
 
-    public int getX() {
+    public int getX(){
         return x;
     }
 
-    public int getY() {
+    public int getY(){
         return y;
     }
 }
