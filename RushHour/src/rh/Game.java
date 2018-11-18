@@ -1,3 +1,6 @@
+package rh;
+
+
 /**
  * Created by aatah on 11/12/2018.
  */
@@ -21,6 +24,6 @@ public class Game {
     }
 
     public String highlightScore(int i) {
-        return null;//"HS:" + levels[i].getHighScore();
+        return "HS:" + levels[i].getHighScore();
     }
 }
