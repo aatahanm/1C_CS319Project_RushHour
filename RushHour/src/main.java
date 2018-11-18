@@ -25,14 +25,6 @@ public class main {
         //Storage tries
         System.out.println(" -------all levels------------");
         Storage store = new Storage();
-        System.out.println(store.takeLevelsFromFile());
-        System.out.println(" --------------------------");
-        //System.out.println(store.createsVehicles( store.takeLevelsFromFile()));
 
-        System.out.println( (store.takeLevelsFromFile()).length());
-        //System.out.println( ( store.takeLevelsFromFile()).substring( 0, 2));
-        System.out.println(" ---------hello------------");
-        String s = "hello";
-        System.out.println( s.substring(1,2));
     }
 }
