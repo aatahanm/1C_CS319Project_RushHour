@@ -21,6 +21,6 @@ public class Game {
     }
 
     public String highlightScore(int i) {
-        return "HS:" + levels[i].getHighScore();
+        return null;//"HS:" + levels[i].getHighScore();
     }
 }

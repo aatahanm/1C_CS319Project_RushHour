@@ -84,4 +84,8 @@ public class Vehicle {
     public int getY(){
         return y;
     }
+
+    public String toString () {
+       return this.x + "\n" + this.y + "\n" + this.direction + "\n" + this.length + "\n";
+    }
 }

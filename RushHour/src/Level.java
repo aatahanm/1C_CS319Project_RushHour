@@ -52,7 +52,7 @@ public class Level {
             }
         }
         if (vCollection.length != 0) {
-            for (int i = 0; i < vCollection.length; i++) {
+            for (int i = 0; i < vCollection.length; i++)
                 if (vCollection[i].getDirection() == "V") {
                     for (int j = 0; j < vCollection[i].getLength(); j++) {
                         map[vCollection[i].getX() + j][vCollection[i].getY()] = 1;
@@ -62,8 +62,6 @@ public class Level {
                         map[vCollection[i].getX()][vCollection[i].getY() + j] = 1;
                     }
                 }
-
-            }
         }
     }
 
