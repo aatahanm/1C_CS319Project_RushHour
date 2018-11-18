@@ -122,7 +122,7 @@ public class Level {
             map[x][y+v.getLength()] = 0;
         }
         if(v.getDirection().equals("V") && v.getX()>x){
-            map[v.getX()+1][v.getY()] = 0;
+            map[v.getX()+v.getLength()-1][v.getY()] = 0;
             v.moveTo(x, y);
             map[x][y] = 1;
         }else if ( v.getDirection().equals("V")){
@@ -139,6 +139,8 @@ public class Level {
      */
     public boolean isFinished() {
         if (objCar.getDirection().equals("H")) {
+            System.out.print("\n x " + (objCar.getY()+objCar.getLength() - 1) +"end x"+ endY+
+                     " y " + objCar.getX()+"end y" + endX);
             if ((objCar.getY() + objCar.getLength() - 1) == endY
                     && objCar.getX() == endX) {
 

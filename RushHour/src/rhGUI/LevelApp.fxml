@@ -56,7 +56,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="221.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="276.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="331.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-      <Label layoutX="237.0" layoutY="36.0" onMouseClicked="#testMouseClicked" text="Level: 1">
+      <Label fx:id="levelNo" layoutX="237.0" layoutY="36.0" onMouseClicked="#testMouseClicked" text="Level: 1">
          <font>
             <Font size="24.0" />
          </font>

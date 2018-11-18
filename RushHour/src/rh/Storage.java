@@ -1,3 +1,5 @@
+package rh;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -54,7 +56,7 @@ public class Storage {
         return levels;
     }
 
-    public Level[] getLevels() throws Exception {   
+    public Level[] getLevels() throws Exception {
         return this.createsVehicles( this.takeLevelsFromFile());
     }
 }
