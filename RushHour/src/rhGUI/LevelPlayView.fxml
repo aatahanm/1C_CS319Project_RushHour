@@ -56,7 +56,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="221.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="276.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e5e5e5" height="50.0" layoutX="331.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-      <Label fx:id="levelNo" layoutX="237.0" layoutY="36.0" onMouseClicked="#testMouseClicked" text="Level: 1">
+      <Label fx:id="levelNo" layoutX="237.0" layoutY="36.0" text="Level: 1">
          <font>
             <Font size="24.0" />
          </font>
@@ -66,7 +66,7 @@
             <Image url="@return.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="509.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="509.0" layoutY="344.0" onMouseClicked="#restartLevel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@home.png" />
          </image>
@@ -78,15 +78,29 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="474.0" layoutY="244.0" onMouseEntered="#testMouseClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Moves">
+      <Text layoutX="474.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moves">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Label fx:id="moves" layoutX="495.0" layoutY="252.0" prefHeight="17.0" prefWidth="50.0" textAlignment="CENTER">
+      <Label fx:id="moves" alignment="CENTER" layoutX="478.0" layoutY="252.0" prefHeight="17.0" prefWidth="50.0" textAlignment="CENTER">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
+      <Label fx:id="timeS" layoutX="514.0" layoutY="140.0" prefHeight="31.0" prefWidth="50.0">
+         <font>
+            <Font size="21.0" />
+         </font></Label>
+      <Label fx:id="timeM" alignment="CENTER_RIGHT" layoutX="441.0" layoutY="140.0" prefHeight="31.0" prefWidth="50.0" wrapText="true">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Text layoutX="498.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

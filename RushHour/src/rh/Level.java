@@ -9,6 +9,10 @@ package rh;
  */
 public class Level {
 
+    public static final int maxWidth = 6;
+    public static final int maxHeight = 6;
+    public static final int minWidth = 0;
+    public static final int minHeight = 0;
     private int map[][];
     private boolean unlocked;
     private int endX;
@@ -22,7 +26,7 @@ public class Level {
      * constructor of the Level class.Takes no parameters.
      */
     public Level() {
-        map = new int[6][6];
+        map = new int[maxHeight][maxHeight];
         endX = 0;
         endY = 0;
         unlocked = false;
@@ -48,8 +52,8 @@ public class Level {
         this.vCollection = vCollection;
         this.vLength = vCollection.length;
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < maxHeight; i++) {
+            for (int j = 0; j < maxWidth; j++) {
                 map[i][j] = 0;
             }
         }
@@ -80,27 +84,29 @@ public class Level {
      * @return
      */
     public boolean canMove(Vehicle v, int x, int y) {
-        if (map[x][y] != 1 && x < 6 && x > -1 && y < 6 && y > -1) {
-            if (v.getDirection().equals("H") && v.getX() == x) {
-                if (!(v.getY() - y >= 2) && v.getY() > y) {
-                    moveVehicle(v, x, y);
-                    return true;
-                } else if (!(y - (v.getY() + v.getLength() - 1) >= 2) && v.getY() < y) {
-                    moveVehicle(v, x, y);
-                    return true;
-                }
-            } else if (v.getDirection().equals("V") && v.getY() == y) {
+        if ( x < maxHeight && x >= minHeight && y < maxWidth && y >= minWidth) {
+            if (map[x][y] != 1) {
+                if (v.getDirection().equals("H") && v.getX() == x) {
+                    if (!(v.getY() - y >= 2) && v.getY() > y) {
+                        moveVehicle(v, x, y);
+                        return true;
+                    } else if (!(y - (v.getY() + v.getLength() - 1) >= 2) && v.getY() < y) {
+                        moveVehicle(v, x, y);
+                        return true;
+                    }
+                } else if (v.getDirection().equals("V") && v.getY() == y) {
 
-                if (!(v.getX() - x >= 2) && v.getX() > x) {
-                    moveVehicle(v, x, y);
-                    return true;
-                } else if (!(x - (v.getX() + v.getLength() - 1) >= 2) && (v.getX() < x)) {
-                    moveVehicle(v, x, y);
-                    return true;
+                    if (!(v.getX() - x >= 2) && v.getX() > x) {
+                        moveVehicle(v, x, y);
+                        return true;
+                    } else if (!(x - (v.getX() + v.getLength() - 1) >= 2) && (v.getX() < x)) {
+                        moveVehicle(v, x, y);
+                        return true;
+                    }
                 }
             }
         }
-        return false;
+            return false;
     }
 
     /**
@@ -139,8 +145,6 @@ public class Level {
      */
     public boolean isFinished() {
         if (objCar.getDirection().equals("H")) {
-            System.out.print("\n x " + (objCar.getY()+objCar.getLength() - 1) +"end x"+ endY+
-                     " y " + objCar.getX()+"end y" + endX);
             if ((objCar.getY() + objCar.getLength() - 1) == endY
                     && objCar.getX() == endX) {
 
