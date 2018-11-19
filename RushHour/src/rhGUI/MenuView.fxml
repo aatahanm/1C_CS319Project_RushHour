@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rhGUI.MenuViewController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="799.0" pickOnBounds="true">
+         <image>
+            <Image url="@Images/background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/Tutorial.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="201.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/PLay.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="353.0" onMouseClicked="#openCredits" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/Credits.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="430.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/Exit.png" />
+         </image>
+      </ImageView>
+      <Text fill="#ad2a2a" layoutX="238.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RUSH HOUR" wrappingWidth="323.41717529296875">
+         <font>
+            <Font name="Showcard Gothic" size="56.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="664.0" layoutY="520.0" pickOnBounds="true">
+         <image>
+            <Image url="@Images/soundonn2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="66.0" layoutX="720.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/musiconn.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

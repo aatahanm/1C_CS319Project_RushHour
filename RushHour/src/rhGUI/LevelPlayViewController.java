@@ -12,11 +12,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,16 +24,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import rh.Car;
 import rh.Level;
-import rh.Vehicle;
 
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -82,16 +80,16 @@ public class LevelPlayViewController {
         iCollectionH = new Image[8];
         for (int i = 0; i < 8; i++) {
             if (i < 4)
-                iCollectionH[i] = new Image(("rhGUI/1" + "H" + Integer.toString(i) + ".png"));
+                iCollectionH[i] = new Image(("rhGUI/Images/1" + "H" + Integer.toString(i) + ".png"));
             else
-                iCollectionH[i] = new Image(("rhGUI/2" + "H" + Integer.toString(i - 4) + ".png"));
+                iCollectionH[i] = new Image(("rhGUI/Images/2" + "H" + Integer.toString(i - 4) + ".png"));
         }
         iCollectionV = new Image[8];
         for (int i = 0; i < 8; i++) {
             if (i < 4)
-                iCollectionV[i] = new Image(("rhGUI/1" + "V" + Integer.toString(i) + ".png"));
+                iCollectionV[i] = new Image(("rhGUI/Images/1" + "V" + Integer.toString(i) + ".png"));
             else
-                iCollectionV[i] = new Image(("rhGUI/2" + "V" + Integer.toString(i - 4) + ".png"));
+                iCollectionV[i] = new Image(("rhGUI/Images/2" + "V" + Integer.toString(i - 4) + ".png"));
         }
     }
 
@@ -103,6 +101,21 @@ public class LevelPlayViewController {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/rhGUI/MenuView.fxml"));
+            root = loader.load();
+            stage = new Stage();
+            stage.setTitle("Rush Hour");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+            //((Node)(e.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException event) {
+            event.printStackTrace();
+        }
     }
 
     //TODO
@@ -134,8 +147,8 @@ public class LevelPlayViewController {
     private void moveVehicle(Level a, ImageView vehicle, int i) {
 
         vehicle.setId(Integer.toString(i));
-        vehicle.setX(55 + a.getVehicle(i).getY() * 55);
-        vehicle.setY(102 + a.getVehicle(i).getX() * 55);
+        vehicle.setX(56 + a.getVehicle(i).getY() * 73);
+        vehicle.setY(100 + a.getVehicle(i).getX() * 74);
 
         Text text = new Text("");
         StackPane stack = new StackPane();
@@ -164,14 +177,14 @@ public class LevelPlayViewController {
         vec.setId(Integer.toString(i));
         vec.setPreserveRatio(false);
         if (a.getVehicle(i).getDirection().equals("H")) {
-            vec.setFitHeight(46);
-            vec.setFitWidth(a.getVehicle(i).getLength() * 50);
+            vec.setFitHeight(60);
+            vec.setFitWidth(a.getVehicle(i).getLength() * 68);
         } else if (a.getVehicle(i).getDirection().equals("V")) {
-            vec.setFitHeight(a.getVehicle(i).getLength() * 50);
-            vec.setFitWidth(46);
+            vec.setFitHeight(a.getVehicle(i).getLength() * 68);
+            vec.setFitWidth(60);
         }
-        vec.setX(55 + a.getVehicle(i).getY() * 55);
-        vec.setY(102 + a.getVehicle(i).getX() * 55);
+        vec.setX(56 + a.getVehicle(i).getY() * 73);
+        vec.setY(100 + a.getVehicle(i).getX() * 74);
 
         text = new Text("");
         stack = new StackPane();
@@ -244,15 +257,15 @@ public class LevelPlayViewController {
 
         };
 
-        Image exitV = new Image("rhGUI/exit.jpg");
+        Image exitV = new Image("rhGUI/Images/exit.jpg");
         ImageView exit = new ImageView(exitV);
-        exit.setFitHeight(50);
-        exit.setFitWidth(50);
-        exit.setX(331);
-        exit.setY(212);
+        exit.setFitHeight(68);
+        exit.setFitWidth(68);
+        exit.setX(420);
+        exit.setY(246);
         myPane.getChildren().add(exit);
 
-        Image image = new Image("rhGUI/objCarH.png");
+        Image image = new Image("rhGUI/Images/objCarH.png");
 
         addVehicle(image,a,0,eventHandler);
 
