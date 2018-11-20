@@ -49,7 +49,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="73.0" layoutX="705.0" layoutY="504.0" onMouseClicked="#returnMenu" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="705.0" layoutY="504.0" onMouseClicked="#returnMenu" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/return.png" />
          </image>

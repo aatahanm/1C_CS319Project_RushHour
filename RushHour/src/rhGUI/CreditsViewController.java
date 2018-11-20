@@ -5,8 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import rh.Sound;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -14,6 +17,8 @@ import java.io.IOException;
  * Created by aatah on 11/19/2018.
  */
 public class CreditsViewController {
+
+    private Sound player = new Sound();
 
     /**
      * The function closes the current window and opens main menu.
@@ -24,19 +29,19 @@ public class CreditsViewController {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
-        Parent root;
+        Stage primaryStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/rhGUI/MenuView.fxml"));
-            root = loader.load();
-            stage = new Stage();
-            stage.setTitle("Rush Hour");
-            stage.setScene(new Scene(root, 800, 600));
-            stage.show();
-            //((Node)(e.getSource())).getScene().getWindow().hide();
-        }
-        catch (IOException event) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
+            MenuViewController cont = new MenuViewController();
+            loader.setController(cont);
+            Pane root = loader.load();
+            primaryStage.setTitle("Rush Hour");
+            primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.setResizable(true);
+            primaryStage.show();
+        } catch (IOException event) {
             event.printStackTrace();
         }
+        player.playClickSound();
     }
 }

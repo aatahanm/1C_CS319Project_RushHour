@@ -30,6 +30,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import rh.Level;
+import rh.Sound;
 
 import java.io.IOException;
 import java.util.Random;
@@ -46,6 +47,7 @@ public class LevelPlayViewController {
     private ImageView vec;
     private StackPane stack;
     private Text text;
+    private Sound player = new Sound();
 
     @FXML
     private Pane myPane;
@@ -70,6 +72,7 @@ public class LevelPlayViewController {
 
     /**
      * The constructor
+     *
      * @param sLevel seleted Level
      */
     public LevelPlayViewController(Level sLevel) {
@@ -95,6 +98,7 @@ public class LevelPlayViewController {
 
     /**
      * A eventlistener to exit from the level and return to main menu.
+     *
      * @param e MouseEvent
      */
     public void returnMenu(MouseEvent e) {
@@ -102,20 +106,20 @@ public class LevelPlayViewController {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
-        Parent root;
+        Stage primaryStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/rhGUI/MenuView.fxml"));
-            root = loader.load();
-            stage = new Stage();
-            stage.setTitle("Rush Hour");
-            stage.setScene(new Scene(root, 800, 600));
-            stage.show();
-            //((Node)(e.getSource())).getScene().getWindow().hide();
-        }
-        catch (IOException event) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
+            MenuViewController cont = new MenuViewController();
+            loader.setController(cont);
+            Pane root = loader.load();
+            primaryStage.setTitle("Rush Hour");
+            primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.setResizable(true);
+            primaryStage.show();
+        } catch (IOException event) {
             event.printStackTrace();
         }
+        player.playClickSound();
     }
 
     //TODO
@@ -123,6 +127,7 @@ public class LevelPlayViewController {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+        player.playClickSound();
     }
 
     /**
@@ -140,9 +145,10 @@ public class LevelPlayViewController {
 
     /**
      * A function that updates a vehicle by putting it into its new location
-     * @param a Level
+     *
+     * @param a       Level
      * @param vehicle ImageView
-     * @param i id of the Vehicle
+     * @param i       id of the Vehicle
      */
     private void moveVehicle(Level a, ImageView vehicle, int i) {
 
@@ -166,9 +172,10 @@ public class LevelPlayViewController {
 
     /**
      * A function that puts a vehicle inside a level to its appropriate location.
-     * @param image Image of the vehicle
-     * @param a Level
-     * @param i index of the vehicle
+     *
+     * @param image        Image of the vehicle
+     * @param a            Level
+     * @param i            index of the vehicle
      * @param eventHandler EventHandler of the vehicle object
      */
     private void addVehicle(Image image, Level a, int i, EventHandler<MouseEvent> eventHandler) {
@@ -267,7 +274,7 @@ public class LevelPlayViewController {
 
         Image image = new Image("rhGUI/Images/objCarH.png");
 
-        addVehicle(image,a,0,eventHandler);
+        addVehicle(image, a, 0, eventHandler);
 
         for (int i = 1; i < a.getVehicleCount(); i++) {
             int img2 = rand.nextInt(3);
