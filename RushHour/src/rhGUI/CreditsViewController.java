@@ -27,18 +27,14 @@ public class CreditsViewController {
     public void returnMenu(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
 
-        Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
             MenuViewController cont = new MenuViewController();
             loader.setController(cont);
             Pane root = loader.load();
-            primaryStage.setTitle("Rush Hour");
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.setResizable(true);
-            primaryStage.show();
+            stage.setScene(new Scene(root, 800, 600));
+
         } catch (IOException event) {
             event.printStackTrace();
         }

@@ -29,7 +29,7 @@ public class Sound {
     }
 
     public void playMusic() {
-        pick = new Media(Paths.get("menutest.mp3").toUri().toString()); // replace this with your own audio file
+        pick = new Media(Paths.get("theme.mp3").toUri().toString()); // replace this with your own audio file
         player = new MediaPlayer(pick);
         player.setCycleCount(MediaPlayer.INDEFINITE);
         player.play();

@@ -9,10 +9,10 @@ package rh;
  */
 public class Level {
 
-    public static final int maxWidth = 6;
-    public static final int maxHeight = 6;
-    public static final int minWidth = 0;
-    public static final int minHeight = 0;
+    private static final int maxWidth = 6;
+    private static final int maxHeight = 6;
+    private static final int minWidth = 0;
+    private static final int minHeight = 0;
     private int map[][];
     private boolean unlocked;
     private int endX;
@@ -59,11 +59,11 @@ public class Level {
         }
         if (vCollection.length != 0) {
             for (int i = 0; i < vCollection.length; i++) {
-                if (vCollection[i].getDirection() == "V") {
+                if (vCollection[i].getDirection().equals("V")) {
                     for (int j = 0; j < vCollection[i].getLength(); j++) {
                         map[vCollection[i].getX() + j][vCollection[i].getY()] = 1;
                     }
-                } else if (vCollection[i].getDirection() == "H") {
+                } else if (vCollection[i].getDirection().equals("H")) {
                     for (int j = 0; j < vCollection[i].getLength(); j++) {
                         map[vCollection[i].getX()][vCollection[i].getY() + j] = 1;
                     }
@@ -84,7 +84,7 @@ public class Level {
      * @return
      */
     public boolean canMove(Vehicle v, int x, int y) {
-        if ( x < maxHeight && x >= minHeight && y < maxWidth && y >= minWidth) {
+        if (x < maxHeight && x >= minHeight && y < maxWidth && y >= minWidth) {
             if (map[x][y] != 1) {
                 if (v.getDirection().equals("H") && v.getX() == x) {
                     if (!(v.getY() - y >= 2) && v.getY() > y) {
@@ -106,7 +106,7 @@ public class Level {
                 }
             }
         }
-            return false;
+        return false;
     }
 
     /**
@@ -118,20 +118,20 @@ public class Level {
      * @param y int y coordinate
      */
     public void moveVehicle(Vehicle v, int x, int y) {
-        if(v.getDirection().equals("H") && v.getY()<y) {
+        if (v.getDirection().equals("H") && v.getY() < y) {
             map[v.getX()][v.getY()] = 0;
             v.moveTo(x, y);
             map[x][y++] = 1;
-        }else if (v.getDirection().equals("H") && v.getY()>y) {
+        } else if (v.getDirection().equals("H") && v.getY() > y) {
             map[x][y] = 1;
             v.moveTo(x, y);
-            map[x][y+v.getLength()] = 0;
+            map[x][y + v.getLength()] = 0;
         }
-        if(v.getDirection().equals("V") && v.getX()>x){
-            map[v.getX()+v.getLength()-1][v.getY()] = 0;
+        if (v.getDirection().equals("V") && v.getX() > x) {
+            map[v.getX() + v.getLength() - 1][v.getY()] = 0;
             v.moveTo(x, y);
             map[x][y] = 1;
-        }else if ( v.getDirection().equals("V")){
+        } else if (v.getDirection().equals("V")) {
             map[v.getX()][v.getY()] = 0;
             v.moveTo(x, y);
             map[x++][y] = 1;

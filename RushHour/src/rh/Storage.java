@@ -14,7 +14,7 @@ public class Storage {
     }
 
     private String takeLevelsFromFile() throws Exception {
-        File file = new File("C:\\Users\\ahmet\\Desktop\\Project319\\1C_CS319Project_RushHour\\levels.txt");
+        File file = new File("src/rh/levels.txt");
 
         BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -26,6 +26,7 @@ public class Storage {
         }
         return result;
     }
+
     private Level[] createsVehicles(String str) {
         Vehicle[] fleet = new Vehicle[20];
 
@@ -38,15 +39,20 @@ public class Storage {
                     int y = (int) Integer.parseInt(str.substring(j + 3, j + 4));
                     String direction = str.substring(j + 7, j + 8);
                     int length = (int) Integer.parseInt(str.substring(j + 11, j + 12));
-                    System.out.println("x: " + x + " y: " + y + " direction: " + direction + " length: " + length);
-                    template = new Vehicle();
+                    //System.out.println("x: " + x + " y: " + y + " direction: " + direction + " length: " + length);
+                    if(j==i+1){
+                        template = new Car();
+                    }else {
+                        template = new Vehicle();
+                    }
                     template.createVehicle(x, y, length, direction);
                     fleet[index] = template;
+                    System.out.print("\n"+fleet[index].getDirection());
                     index++;
                     if (str.charAt(j+12) == '&') {
                         System.out.println( " level tamam" );
                         lvl = new Level();
-                        lvl.createLevel( fleet, 2,5, (Car)(fleet[ fleet.length - 1]));
+                        lvl.createLevel( fleet, 2,5, (Car)(fleet[0]));
                         levels[ indexLevel] = lvl;
                         indexLevel++;
                         break;
@@ -58,6 +64,10 @@ public class Storage {
 
     public Level[] getLevels() throws Exception {
         return this.createsVehicles( this.takeLevelsFromFile());
+    }
+
+    public Level getLevel(int index)throws Exception{
+        return (this.createsVehicles( this.takeLevelsFromFile()))[index];
     }
 }
 

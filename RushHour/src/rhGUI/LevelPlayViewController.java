@@ -42,7 +42,7 @@ public class LevelPlayViewController {
     private final IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
     private int timeMinutes = 0;
     private Level sLevel;
-    private Level rLevel;
+    private final Level rLevel;
     private Timeline timeline;
     private ImageView vec;
     private StackPane stack;
@@ -77,7 +77,7 @@ public class LevelPlayViewController {
      */
     public LevelPlayViewController(Level sLevel) {
         this.sLevel = sLevel;
-        rLevel = sLevel;
+        rLevel = new Level();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
 
         iCollectionH = new Image[8];
@@ -104,18 +104,18 @@ public class LevelPlayViewController {
     public void returnMenu(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        //stage.close();
 
-        Stage primaryStage = new Stage();
+        //Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
             MenuViewController cont = new MenuViewController();
             loader.setController(cont);
             Pane root = loader.load();
-            primaryStage.setTitle("Rush Hour");
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.setResizable(true);
-            primaryStage.show();
+            //stage.setTitle("Rush Hour");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setResizable(true);
+            //primaryStage.show();
         } catch (IOException event) {
             event.printStackTrace();
         }
@@ -126,8 +126,19 @@ public class LevelPlayViewController {
     public void restartLevel(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
         player.playClickSound();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
+            if (sLevel.equals(rLevel))
+                System.out.print("hry");
+            LevelPlayViewController cont = new LevelPlayViewController(sLevel);
+            loader.setController(cont);
+            Pane root = loader.load();
+            stage.setScene(new Scene(root, 800, 600));
+        } catch (IOException event) {
+            event.printStackTrace();
+        }
     }
 
     /**

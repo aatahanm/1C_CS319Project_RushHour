@@ -24,7 +24,6 @@ public class LevelSelectionViewController {
     public void openLevel(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
 
         Vehicle[] car = new Vehicle[8];
         car[0] = new Car();
@@ -48,16 +47,12 @@ public class LevelSelectionViewController {
         Level a = new Level();
         a.createLevel(car, 2, 5, (Car) car[0]);
 
-        Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
             LevelPlayViewController cont = new LevelPlayViewController(a);
             loader.setController(cont);
             Pane root = loader.load();
-            primaryStage.setTitle("Rush Hour");
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.setResizable(true);
-            primaryStage.show();
+            stage.setScene(new Scene(root, 800, 600));
         } catch (IOException event) {
             event.printStackTrace();
         }
@@ -72,18 +67,18 @@ public class LevelSelectionViewController {
     public void returnMenu(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        //stage.close();
 
-        Stage primaryStage = new Stage();
+        //Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
             MenuViewController cont = new MenuViewController();
             loader.setController(cont);
             Pane root = loader.load();
-            primaryStage.setTitle("Rush Hour");
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.setResizable(true);
-            primaryStage.show();
+            //stage.setTitle("Rush Hour");
+            stage.setScene(new Scene(root, 800, 600));
+            //stage.setResizable(true);
+            //stage.show();
         } catch (IOException event) {
             event.printStackTrace();
         }
