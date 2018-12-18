@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import rh.Sound;
@@ -22,8 +23,9 @@ import java.io.IOException;
 public class MenuViewController {
 
     private Sound player = new Sound();
-    private Sound backgroundMusic = new Sound();
+    private Sound backgroundMusic;
     private boolean music;
+    private boolean sound;
 
     @FXML
     ImageView exit = new ImageView();
@@ -33,26 +35,33 @@ public class MenuViewController {
     ImageView credits = new ImageView();
     @FXML
     ImageView tutorial = new ImageView();
+    @FXML
+    ImageView musicButton = new ImageView();
+    @FXML
+    ImageView soundButton = new ImageView();
 
-    public MenuViewController (){
 
+    public MenuViewController (Sound backgroundMusic, boolean music, boolean sound){
+        this.backgroundMusic = backgroundMusic;
+        this.music = music;
+        this.sound = sound;
     }
 
     public void play(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
 
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/rhGUI/LevelSelectionView.fxml"));
-            root = loader.load();
-            stage.setTitle("Rush Hour");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelSelectionView.fxml"));
+            LevelSelectionViewController cont = new LevelSelectionViewController(backgroundMusic, music, sound);
+            loader.setController(cont);
+            Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+
+        player.playClickSound(sound);
     }
 
     /**
@@ -61,7 +70,7 @@ public class MenuViewController {
      * @param e MouseEvent
      */
     public void exit(MouseEvent e) {
-        player.playClickSound();
+    player.playClickSound(sound);
 
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
@@ -79,20 +88,21 @@ public class MenuViewController {
         Stage stage = (Stage) source.getScene().getWindow();
 
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/rhGUI/CreditsView.fxml"));
-            Parent root = loader.load();
-            stage.setTitle("Rush Hour");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/CreditsView.fxml"));
+            CreditsViewController cont = new CreditsViewController(backgroundMusic, music, sound);
+            loader.setController(cont);
+            Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+
+        player.playClickSound(sound);
 
     }
 
     public void mouseEnteredExit(MouseEvent e){
-        player.playMouseOverSound();
+        player.playMouseOverSound(sound);
         Image image = new Image("/rhGUI/Images/exitO.png");
         exit.setImage(image);
     }
@@ -103,7 +113,7 @@ public class MenuViewController {
     }
 
     public void mouseEnteredPlay(MouseEvent e){
-        player.playMouseOverSound();
+        player.playMouseOverSound(sound);
         Image image = new Image("/rhGUI/Images/PlayO.png");
         play.setImage(image);
     }
@@ -114,7 +124,7 @@ public class MenuViewController {
     }
 
     public void mouseEnteredTutorial(MouseEvent e){
-        player.playMouseOverSound();
+        player.playMouseOverSound(sound);
         Image image = new Image("/rhGUI/Images/TutorialO.png");
         tutorial.setImage(image);
     }
@@ -125,7 +135,7 @@ public class MenuViewController {
     }
 
     public void mouseEnteredCredits(MouseEvent e){
-        player.playMouseOverSound();
+        player.playMouseOverSound(sound);
         Image image = new Image("/rhGUI/Images/CreditsO.png");
         credits.setImage(image);
     }
@@ -133,6 +143,39 @@ public class MenuViewController {
     public void mouseExitedCredits(MouseEvent e){
         Image image = new Image("/rhGUI/Images/Credits.png");
         credits.setImage(image);
+    }
+
+    public void mouseEnteredMusic(MouseEvent e){
+        player.playMouseOverSound(sound);
+        Image image = new Image("/rhGUI/Images/musiconOver.png");
+        musicButton.setImage(image);
+    }
+
+    public void mouseExitedMusic(MouseEvent e){
+        if(music) {
+            Image image = new Image("/rhGUI/Images/musiconn.png");
+            musicButton.setImage(image);
+        }else{
+            Image image = new Image("/rhGUI/Images/musicoff.png");
+            musicButton.setImage(image);
+        }
+    }
+
+    public void mouseEnteredSound(MouseEvent e){
+        player.playMouseOverSound(sound);
+        Image image = new Image("/rhGUI/Images/SoundOver.png");
+        soundButton.setImage(image);
+
+    }
+
+    public void mouseExitedSound(MouseEvent e){
+        if(sound) {
+            Image image = new Image("/rhGUI/Images/soundonn2.png");
+            soundButton.setImage(image);
+        }else{
+            Image image = new Image("/rhGUI/Images/Soundoff.png");
+            soundButton.setImage(image);
+        }
     }
 
     public void stopMusic(){
@@ -143,6 +186,17 @@ public class MenuViewController {
         else {
             backgroundMusic.playMusic();
             music = true;
+        }
+    }
+
+    public void stopSound(){
+        Image image = new Image("/rhGUI/Images/Soundoff.png");
+        soundButton.setImage(image);
+        if(sound) {
+            sound = false;
+        }
+        else {
+            sound = true;
         }
     }
 
@@ -157,6 +211,21 @@ public class MenuViewController {
     }
 
     public void initialize(){
+        if(sound) {
+            Image image = new Image("/rhGUI/Images/soundonn2.png");
+            soundButton.setImage(image);
+        }else{
+            Image image = new Image("/rhGUI/Images/Soundoff.png");
+            soundButton.setImage(image);
+        }
+
+        if(music) {
+            Image image = new Image("/rhGUI/Images/musiconn.png");
+            musicButton.setImage(image);
+        }else{
+            Image image = new Image("/rhGUI/Images/musicoff.png");
+            musicButton.setImage(image);
+        }
 
     }
 

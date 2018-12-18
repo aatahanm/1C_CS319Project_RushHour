@@ -18,10 +18,19 @@ import java.io.IOException;
  */
 public class CreditsViewController {
 
+    private boolean music;
     private Sound player = new Sound();
+    private Sound backgroundMusic;
+    private boolean sound;
+
+    public CreditsViewController (Sound backgroundMusic,boolean music, boolean sound){
+        this.backgroundMusic = backgroundMusic;
+        this.music = music;
+        this.sound = sound;
+    }
 
     /**
-     * The function closes the current window and opens main menu.
+     * The function changes current window to main menu.
      * @param e MouseEvent
      */
     public void returnMenu(MouseEvent e) {
@@ -30,7 +39,7 @@ public class CreditsViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController();
+            MenuViewController cont = new MenuViewController(backgroundMusic, music,sound);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -38,6 +47,6 @@ public class CreditsViewController {
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+        player.playClickSound(sound);
     }
 }

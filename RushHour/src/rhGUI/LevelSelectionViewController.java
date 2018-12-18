@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import rh.Car;
-import rh.Level;
-import rh.Sound;
-import rh.Vehicle;
+import rh.*;
 
 import java.io.IOException;
 
@@ -19,12 +16,23 @@ import java.io.IOException;
  */
 public class LevelSelectionViewController {
 
+    private boolean music;
     private Sound player = new Sound();
+    private Sound backgroundMusic;
+    private Level a;
+    private boolean sound;
 
-    public void openLevel(MouseEvent e) {
+    public LevelSelectionViewController(Sound backgroundMusic, boolean music, boolean sound){
+        this.backgroundMusic = backgroundMusic;
+        this.music = music;
+        this.sound = sound;
+    }
+
+    public void openLevel(MouseEvent e) throws
+            CloneNotSupportedException{
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-
+/*
         Vehicle[] car = new Vehicle[8];
         car[0] = new Car();
         car[1] = new Vehicle();
@@ -43,20 +51,21 @@ public class LevelSelectionViewController {
         car[5].createVehicle(1, 3, 3, "V");
         car[6].createVehicle(0, 5, 3, "V");
         car[7].createVehicle(5, 2, 3, "H");
+*/
 
-        Level a = new Level();
-        a.createLevel(car, 2, 5, (Car) car[0]);
+
+        //a.createLevel(car, 2, 5, (Car) car[0]);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
-            LevelPlayViewController cont = new LevelPlayViewController(a);
+            LevelPlayViewController cont = new LevelPlayViewController(a, backgroundMusic, music, sound);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+        player.playClickSound(sound);
     }
 
     /**
@@ -72,16 +81,22 @@ public class LevelSelectionViewController {
         //Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController();
+            MenuViewController cont = new MenuViewController(backgroundMusic, music, sound);
             loader.setController(cont);
             Pane root = loader.load();
-            //stage.setTitle("Rush Hour");
             stage.setScene(new Scene(root, 800, 600));
-            //stage.setResizable(true);
-            //stage.show();
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+        player.playClickSound(sound);
+    }
+
+    public void initialize(){
+        Storage test = new Storage();
+        try {
+            a = test.getLevel(0);
+        }catch (Exception es) {
+            es.printStackTrace();
+        }
     }
 }

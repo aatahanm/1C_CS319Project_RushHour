@@ -6,6 +6,8 @@ import javafx.scene.media.MediaPlayer;
 import java.nio.file.Paths;
 
 /**
+ * The sound class play different sound for different function calls. Depending on the function call pick and player
+ * properties are assigned and used to play the assigned sound/music.
  * Created by aatahanm on 11/20/2018.
  */
 public class Sound {
@@ -16,18 +18,34 @@ public class Sound {
     public Sound() {
     }
 
-    public void playMouseOverSound() {
-        pick = new Media(Paths.get("MouseOver_Button.mp3").toUri().toString()); // replace this with your own audio file
-        player = new MediaPlayer(pick);
-        player.play();
+    /**
+     * This function picks the mouseOver effect sound and plays it depending on the give sound value
+     * @param sound boolean
+     */
+    public void playMouseOverSound(boolean sound) {
+        if(sound) {
+            pick = new Media(Paths.get("MouseOver_Button.mp3").toUri().toString()); // replace this with your own audio file
+            player = new MediaPlayer(pick);
+            player.play();
+        }
     }
 
-    public void playClickSound() {
-        pick = new Media(Paths.get("MouseClick_Button.mp3").toUri().toString()); // replace this with your own audio file
-        player = new MediaPlayer(pick);
-        player.play();
+    /**
+     * This function pick the click button sound and plays it depending on the given sound value.
+     * @param sound boolean
+     */
+    public void playClickSound(boolean sound) {
+        if(sound) {
+            pick = new Media(Paths.get("MouseClick_Button.mp3").toUri().toString()); // replace this with your own audio file
+            player = new MediaPlayer(pick);
+            player.play();
+        }
     }
 
+    /**
+     * This function picks the background music of the game and plays it. It continues to play the same music unless
+     * stopMusic function is called.
+     */
     public void playMusic() {
         pick = new Media(Paths.get("theme.mp3").toUri().toString()); // replace this with your own audio file
         player = new MediaPlayer(pick);
@@ -35,7 +53,6 @@ public class Sound {
         player.play();
     }
 
-    //TODO
     public void stopMusic() {
         player.stop();
     }

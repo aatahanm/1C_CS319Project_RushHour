@@ -3,6 +3,7 @@ package rh;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class Storage {
     private Vehicle template;
@@ -10,7 +11,7 @@ public class Storage {
     private Level[] levels;
 
     public Storage() {
-        levels = new Level[5];
+        levels = new Level[2];
     }
 
     private String takeLevelsFromFile() throws Exception {
@@ -27,8 +28,17 @@ public class Storage {
         return result;
     }
 
+    public void printFile(){
+        try {
+            System.out.print(takeLevelsFromFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Level[] createsVehicles(String str) {
-        Vehicle[] fleet = new Vehicle[20];
+        //Vehicle[] fleet = new Vehicle[20];
+        ArrayList<Vehicle> fleet = new ArrayList<>();
 
         int index = 0; // for fleet array
         int indexLevel = 0; // for levels array ex=> 0: first level 1: second level
@@ -46,17 +56,24 @@ public class Storage {
                         template = new Vehicle();
                     }
                     template.createVehicle(x, y, length, direction);
-                    fleet[index] = template;
-                    System.out.print("\n"+fleet[index].getDirection());
+                    fleet.add(template);
+                    //System.out.print("\n"+fleet[index].getDirection());
                     index++;
                     if (str.charAt(j+12) == '&') {
-                        System.out.println( " level tamam" );
+                        Vehicle[] fleetA = new Vehicle[fleet.size()];
+                        for (i = 0; i < fleet.size(); i++){
+                            fleetA[i] = fleet.get(i);
+                        }
+                        //System.out.println( " level tamam" );
+                        //System.out.println( fleetA[0]);
                         lvl = new Level();
-                        lvl.createLevel( fleet, 2,5, (Car)(fleet[0]));
+                        lvl.createLevel( fleetA, 2,5, (Car)(fleetA[0]));
                         levels[ indexLevel] = lvl;
                         indexLevel++;
                         break;
                     }
+                    if(indexLevel == 2)
+                        break;
                 }
             }
         return levels;

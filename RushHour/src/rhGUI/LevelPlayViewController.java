@@ -42,12 +42,15 @@ public class LevelPlayViewController {
     private final IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
     private int timeMinutes = 0;
     private Level sLevel;
-    private final Level rLevel;
+    private Level rLevel;
     private Timeline timeline;
     private ImageView vec;
     private StackPane stack;
     private Text text;
     private Sound player = new Sound();
+    private Sound backgroundMusic;
+    private boolean music;
+    private boolean sound;
 
     @FXML
     private Pane myPane;
@@ -75,11 +78,14 @@ public class LevelPlayViewController {
      *
      * @param sLevel seleted Level
      */
-    public LevelPlayViewController(Level sLevel) {
+    public LevelPlayViewController(Level sLevel, Sound backgroundMusic, boolean music, boolean sound){
+        this.backgroundMusic = backgroundMusic;
+        this.music = music;
         this.sLevel = sLevel;
-        rLevel = new Level();
+        this.sound = sound;
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
 
+        //initializing the horizontal vehicle images
         iCollectionH = new Image[8];
         for (int i = 0; i < 8; i++) {
             if (i < 4)
@@ -87,6 +93,7 @@ public class LevelPlayViewController {
             else
                 iCollectionH[i] = new Image(("rhGUI/Images/2" + "H" + Integer.toString(i - 4) + ".png"));
         }
+        //initializing the vertical vehicle images
         iCollectionV = new Image[8];
         for (int i = 0; i < 8; i++) {
             if (i < 4)
@@ -104,35 +111,31 @@ public class LevelPlayViewController {
     public void returnMenu(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        //stage.close();
 
-        //Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController();
+            MenuViewController cont = new MenuViewController(backgroundMusic, music,sound);
             loader.setController(cont);
             Pane root = loader.load();
-            //stage.setTitle("Rush Hour");
             stage.setScene(new Scene(root, 800, 600));
             stage.setResizable(true);
-            //primaryStage.show();
         } catch (IOException event) {
             event.printStackTrace();
         }
-        player.playClickSound();
+        player.playClickSound(sound);
     }
 
     //TODO
     public void restartLevel(MouseEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        player.playClickSound();
+        player.playClickSound(sound);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
             if (sLevel.equals(rLevel))
                 System.out.print("hry");
-            LevelPlayViewController cont = new LevelPlayViewController(sLevel);
+            LevelPlayViewController cont = new LevelPlayViewController(rLevel,backgroundMusic,music,sound);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -237,6 +240,7 @@ public class LevelPlayViewController {
             public void handle(MouseEvent event) {
                 ImageView vehicle = (ImageView) event.getSource();
 
+                //left click is moving down or right
                 if (event.getButton() == MouseButton.PRIMARY) {
                     for (int i = 0; i < a.getVehicleCount(); i++) {
                         if (vehicle.getId().equals(Integer.toString(i))) {
@@ -254,6 +258,7 @@ public class LevelPlayViewController {
                             }
                         }
                     }
+                //right click is moving up or left
                 } else if (event.getButton() == MouseButton.SECONDARY) {
                     for (int i = 0; i < a.getVehicleCount(); i++) {
                         if (vehicle.getId().equals(Integer.toString(i))) {

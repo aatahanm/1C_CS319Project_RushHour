@@ -27,10 +27,14 @@ import java.nio.file.Paths;
  */
 public class main extends Application{
 
+    private boolean music = true;
+    private Sound backgroundMusic = new Sound();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController();
+            MenuViewController cont = new MenuViewController(backgroundMusic, true,true);
+            cont.playMusic(music);
             loader.setController(cont);
             Pane root = loader.load();
             primaryStage.setTitle("Rush Hour");

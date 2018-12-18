@@ -29,7 +29,6 @@ public class Level {
         map = new int[maxHeight][maxHeight];
         endX = 0;
         endY = 0;
-        unlocked = false;
         objCar = new Car();
         unlocked = false;
         highScore = 0;
@@ -187,4 +186,5 @@ public class Level {
         }
         return s;
     }
+
 }
