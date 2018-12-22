@@ -61,14 +61,13 @@ public class Storage {
                     //System.out.print("\n"+fleet[index].getDirection());
                     index++;
                     if (str.charAt(j + 12) == '&') {
-                        if(indexLevel == 9){
+                        if(indexLevel == 12){
                             break;
                         }
                         //System.out.println( " level tamam" );
                         //System.out.println( fleetA[0]);
                         lvl = new Level();
                         lvl.createLevel(fleet, 2, 5, (Car) (fleet.get(0)));
-                        System.out.println(indexLevel);
                         levels.add(lvl);
                         indexLevel++;
                         break;

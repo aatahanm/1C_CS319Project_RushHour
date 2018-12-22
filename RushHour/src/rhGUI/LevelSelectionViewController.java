@@ -77,8 +77,7 @@ public class LevelSelectionViewController {
             Stage stage = (Stage) source.getScene().getWindow();
 
             try {
-                selectedLevel = test.getLevel(Integer.valueOf(text.getText()));
-                System.out.println(text.getText());
+                selectedLevel = test.getLevel(Integer.valueOf(text.getText())-1);
             }catch (Exception es) {
                 es.printStackTrace();
             }
@@ -104,6 +103,7 @@ public class LevelSelectionViewController {
         test = new Storage();
         try {
             t = test.getLevels().size();
+
         }catch (Exception es) {
             es.printStackTrace();
         }
@@ -116,7 +116,7 @@ public class LevelSelectionViewController {
             StackPane stack = new StackPane();
             Circle lvl = new Circle();
 
-            lvlNo.setText(Integer.toString(i));
+            lvlNo.setText(Integer.toString(i+1));
             lvl.setRadius(38);
             lvl.setFill(lvlBColor);
             lvl.setSmooth(true);

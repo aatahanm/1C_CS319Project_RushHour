@@ -80,12 +80,14 @@ public class LevelPlayViewController {
     @FXML
     private Label timeM;
 
+
     /**
      * The constructor
      *
      * @param sLevel seleted Level
      */
     public LevelPlayViewController(Level sLevel, Sound backgroundMusic, boolean music, boolean sound){
+
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sLevel = sLevel;
@@ -193,15 +195,30 @@ public class LevelPlayViewController {
                 popup.setY(200);
                 popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
                 popup.show(myPane.getScene().getWindow());*/
-                    Stage dialog = new Stage();
-                    dialog.initStyle(StageStyle.UTILITY);
-                    dialog.initModality(Modality.APPLICATION_MODAL);
-                    dialog.initOwner(myPane.getScene().getWindow());
-                    VBox dialogVbox = new VBox(20);
-                    dialogVbox.getChildren().add(new Text("This is a Dialog"));
-                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                    dialog.setScene(dialogScene);
-                    dialog.show();
+                    ImageView dialogB = new ImageView("rhGUI/Images/Credits_Parchment.png");
+                    ImageView nextLevel = new ImageView("rhGUI/Images/nextLevel.png");
+                    nextLevel.setLayoutY(200);
+                    nextLevel.setLayoutX(50);
+                    nextLevel.setFitHeight(50);
+                    nextLevel.setFitWidth(100);
+
+                    ImageView selectLevel = new ImageView("rhGUI/Images/levelSelect.png");
+                    selectLevel.setLayoutX(190);
+                    selectLevel.setLayoutY(200);
+                    selectLevel.setFitHeight(48);
+                    selectLevel.setFitWidth(140);
+                    Text congur = new Text("Congratulations You Have Completed The Level!\n" +
+                            "\t\tWhat would you like to do?");
+                    congur.setLayoutX(45);
+                    congur.setLayoutY(120);
+                    dialogB.setFitHeight(300);
+                    dialogB.setFitWidth(400);
+                    Pane s = new Pane();
+
+                    s.setLayoutX(200);
+                    s.setLayoutY(200);
+                    s.getChildren().addAll(dialogB, congur, nextLevel,selectLevel);
+                    myPane.getChildren().add(s);
                     timeline.stop();
                     levelNo.setText("Level Completed");
                 }

@@ -24,8 +24,9 @@ public class Sound {
      */
     public void playMouseOverSound(boolean sound) {
         if(sound) {
-            pick = new Media(Paths.get("MouseOver_Button.mp3").toUri().toString()); // replace this with your own audio file
+            pick = new Media(Paths.get("src/rhGUI/Sound/MouseOver_Button.mp3").toUri().toString()); // replace this with your own audio file
             player = new MediaPlayer(pick);
+            player.setVolume(0.3);
             player.play();
         }
     }
@@ -36,8 +37,9 @@ public class Sound {
      */
     public void playClickSound(boolean sound) {
         if(sound) {
-            pick = new Media(Paths.get("MouseClick_Button.mp3").toUri().toString()); // replace this with your own audio file
+            pick = new Media(Paths.get("src/rhGUI/Sound/MouseClick_Button.mp3").toUri().toString()); // replace this with your own audio file
             player = new MediaPlayer(pick);
+            player.setVolume(0.5);
             player.play();
         }
     }
@@ -47,9 +49,10 @@ public class Sound {
      * stopMusic function is called.
      */
     public void playMusic() {
-        pick = new Media(Paths.get("theme.mp3").toUri().toString()); // replace this with your own audio file
+        pick = new Media(Paths.get("src/rhGUI/Sound/theme.mp3").toUri().toString()); // replace this with your own audio file
         player = new MediaPlayer(pick);
         player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setVolume(0.7);
         player.play();
     }
 
