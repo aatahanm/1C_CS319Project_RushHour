@@ -24,10 +24,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import rh.Level;
 import rh.Sound;
@@ -51,6 +57,7 @@ public class LevelPlayViewController {
     private Sound backgroundMusic;
     private boolean music;
     private boolean sound;
+    private boolean finished;
 
     @FXML
     private Pane myPane;
@@ -83,6 +90,7 @@ public class LevelPlayViewController {
         this.music = music;
         this.sLevel = sLevel;
         this.sound = sound;
+        finished = false;
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
 
         //initializing the horizontal vehicle images
@@ -133,8 +141,6 @@ public class LevelPlayViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
-            if (sLevel.equals(rLevel))
-                System.out.print("hry");
             LevelPlayViewController cont = new LevelPlayViewController(rLevel,backgroundMusic,music,sound);
             loader.setController(cont);
             Pane root = loader.load();
@@ -166,22 +172,41 @@ public class LevelPlayViewController {
      */
     private void moveVehicle(Level a, ImageView vehicle, int i) {
 
-        vehicle.setId(Integer.toString(i));
-        vehicle.setX(56 + a.getVehicle(i).getY() * 73);
-        vehicle.setY(100 + a.getVehicle(i).getX() * 74);
 
-        Text text = new Text("");
-        StackPane stack = new StackPane();
-        stack.getChildren().addAll(vehicle, text);
-        stack.setLayoutX(vehicle.getX());
-        stack.setLayoutY(vehicle.getY());
-        myPane.getChildren().add(stack);
-        moveC++;
-        moves.setText(Integer.toString(moveC));
-        if (a.isFinished()) {
-            timeline.stop();
-            levelNo.setText("Level Completed");
-        }
+            vehicle.setId(Integer.toString(i));
+            vehicle.setX(56 + a.getVehicle(i).getY() * 73);
+            vehicle.setY(100 + a.getVehicle(i).getX() * 74);
+
+            Text text = new Text("");
+            StackPane stack = new StackPane();
+            stack.getChildren().addAll(vehicle, text);
+            stack.setLayoutX(vehicle.getX());
+            stack.setLayoutY(vehicle.getY());
+            myPane.getChildren().add(stack);
+            moveC++;
+            moves.setText(Integer.toString(moveC));
+            if (a.getVehicle(i).isMainCar()) {
+                if (a.isFinished()) {
+                    finished = true;
+                /*Popup popup = new Popup();
+                popup.setX(300);
+                popup.setY(200);
+                popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
+                popup.show(myPane.getScene().getWindow());*/
+                    Stage dialog = new Stage();
+                    dialog.initStyle(StageStyle.UTILITY);
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    dialog.initOwner(myPane.getScene().getWindow());
+                    VBox dialogVbox = new VBox(20);
+                    dialogVbox.getChildren().add(new Text("This is a Dialog"));
+                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                    dialog.setScene(dialogScene);
+                    dialog.show();
+                    timeline.stop();
+                    levelNo.setText("Level Completed");
+                }
+            }
+
     }
 
     /**
@@ -238,42 +263,43 @@ public class LevelPlayViewController {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ImageView vehicle = (ImageView) event.getSource();
+                if(!finished) {
+                    ImageView vehicle = (ImageView) event.getSource();
+                    //left click is moving down or right
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        for (int i = 0; i < a.getVehicleCount(); i++) {
+                            if (vehicle.getId().equals(Integer.toString(i))) {
+                                if (a.getVehicle(i).getDirection().equals("V") &&
+                                        a.canMove(a.getVehicle(i), a.getVehicle(i).getX() + a.getVehicle(i).getLength(),
+                                                a.getVehicle(i).getY())) {
+                                    myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
+                                    moveVehicle(a, vehicle, i);
 
-                //left click is moving down or right
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    for (int i = 0; i < a.getVehicleCount(); i++) {
-                        if (vehicle.getId().equals(Integer.toString(i))) {
-                            if (a.getVehicle(i).getDirection().equals("V") &&
-                                    a.canMove(a.getVehicle(i), a.getVehicle(i).getX() + a.getVehicle(i).getLength(),
-                                            a.getVehicle(i).getY())) {
-                                myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
-                                moveVehicle(a, vehicle, i);
-
-                            } else if (a.getVehicle(i).getDirection().equals("H") &&
-                                    a.canMove(a.getVehicle(i), a.getVehicle(i).getX(),
-                                            a.getVehicle(i).getY() + a.getVehicle(i).getLength())) {
-                                myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
-                                moveVehicle(a, vehicle, i);
+                                } else if (a.getVehicle(i).getDirection().equals("H") &&
+                                        a.canMove(a.getVehicle(i), a.getVehicle(i).getX(),
+                                                a.getVehicle(i).getY() + a.getVehicle(i).getLength())) {
+                                    myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
+                                    moveVehicle(a, vehicle, i);
+                                }
                             }
                         }
-                    }
-                //right click is moving up or left
-                } else if (event.getButton() == MouseButton.SECONDARY) {
-                    for (int i = 0; i < a.getVehicleCount(); i++) {
-                        if (vehicle.getId().equals(Integer.toString(i))) {
-                            if (a.getVehicle(i).getDirection().equals("V") &&
-                                    a.canMove(a.getVehicle(i), a.getVehicle(i).getX() - 1, a.getVehicle(i).getY())) {
-                                myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
-                                moveVehicle(a, vehicle, i);
-                            } else if (a.getVehicle(i).getDirection().equals("H") &&
-                                    a.canMove(a.getVehicle(i), a.getVehicle(i).getX(), a.getVehicle(i).getY() - 1)) {
-                                myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
-                                moveVehicle(a, vehicle, i);
+                        //right click is moving up or left
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
+                        for (int i = 0; i < a.getVehicleCount(); i++) {
+                            if (vehicle.getId().equals(Integer.toString(i))) {
+                                if (a.getVehicle(i).getDirection().equals("V") &&
+                                        a.canMove(a.getVehicle(i), a.getVehicle(i).getX() - 1, a.getVehicle(i).getY())) {
+                                    myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
+                                    moveVehicle(a, vehicle, i);
+                                } else if (a.getVehicle(i).getDirection().equals("H") &&
+                                        a.canMove(a.getVehicle(i), a.getVehicle(i).getX(), a.getVehicle(i).getY() - 1)) {
+                                    myPane.getChildren().remove(((ImageView) event.getSource()).getParent());
+                                    moveVehicle(a, vehicle, i);
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
 
             }

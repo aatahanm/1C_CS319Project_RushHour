@@ -54,6 +54,10 @@ public class Vehicle {
             this.y++;
     }
 
+    public boolean isMainCar(){
+        return false;
+    }
+
     /**
      * Getter function for direction.
      * @return string direction.

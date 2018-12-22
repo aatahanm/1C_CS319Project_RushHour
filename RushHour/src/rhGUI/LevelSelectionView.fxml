@@ -3,11 +3,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
          <image>
@@ -29,11 +28,5 @@
             <Image url="@Images/return.png" />
          </image>
       </ImageView>
-      <Circle id="1" fill="#73cd25" layoutX="223.0" layoutY="249.0" onMouseClicked="#openLevel" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
-      <Text layoutX="217.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
    </children>
 </Pane>

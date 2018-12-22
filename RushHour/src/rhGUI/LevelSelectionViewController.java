@@ -1,11 +1,20 @@
 package rhGUI;
 
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import rh.*;
 
@@ -19,8 +28,12 @@ public class LevelSelectionViewController {
     private boolean music;
     private Sound player = new Sound();
     private Sound backgroundMusic;
-    private Level a;
+    private Level selectedLevel;
     private boolean sound;
+    private Storage test ;
+
+    @FXML
+    Pane myPane = new Pane();
 
     public LevelSelectionViewController(Sound backgroundMusic, boolean music, boolean sound){
         this.backgroundMusic = backgroundMusic;
@@ -28,44 +41,8 @@ public class LevelSelectionViewController {
         this.sound = sound;
     }
 
-    public void openLevel(MouseEvent e) throws
-            CloneNotSupportedException{
-        Node source = (Node) e.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-/*
-        Vehicle[] car = new Vehicle[8];
-        car[0] = new Car();
-        car[1] = new Vehicle();
-        car[2] = new Vehicle();
-        car[3] = new Vehicle();
-        car[4] = new Vehicle();
-        car[5] = new Vehicle();
-        car[6] = new Vehicle();
-        car[7] = new Vehicle();
-
-        car[0].createVehicle(2, 1, 2, "H");
-        car[1].createVehicle(0, 0, 2, "H");
-        car[2].createVehicle(4, 0, 2, "V");
-        car[3].createVehicle(4, 4, 2, "H");
-        car[4].createVehicle(1, 0, 3, "V");
-        car[5].createVehicle(1, 3, 3, "V");
-        car[6].createVehicle(0, 5, 3, "V");
-        car[7].createVehicle(5, 2, 3, "H");
-*/
-
-
-        //a.createLevel(car, 2, 5, (Car) car[0]);
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
-            LevelPlayViewController cont = new LevelPlayViewController(a, backgroundMusic, music, sound);
-            loader.setController(cont);
-            Pane root = loader.load();
-            stage.setScene(new Scene(root, 800, 600));
-        } catch (IOException event) {
-            event.printStackTrace();
-        }
-        player.playClickSound(sound);
+    public void openLevel(MouseEvent e)
+           {
     }
 
     /**
@@ -90,13 +67,76 @@ public class LevelSelectionViewController {
         }
         player.playClickSound(sound);
     }
+    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            StackPane s = (StackPane) event.getSource();
+            Text text = (Text)s.getChildren().get(1);
+
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+
+            try {
+                selectedLevel = test.getLevel(Integer.valueOf(text.getText()));
+                System.out.println(text.getText());
+            }catch (Exception es) {
+                es.printStackTrace();
+            }
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
+                LevelPlayViewController cont = new LevelPlayViewController(selectedLevel, backgroundMusic, music, sound);
+                loader.setController(cont);
+                Pane root = loader.load();
+                stage.setScene(new Scene(root, 800, 600));
+            } catch (IOException evnt) {
+                evnt.printStackTrace();
+            }
+            player.playClickSound(sound);
+        }
+
+    };
+
 
     public void initialize(){
-        Storage test = new Storage();
+
+        int t= 0;
+        test = new Storage();
         try {
-            a = test.getLevel(0);
+            t = test.getLevels().size();
         }catch (Exception es) {
             es.printStackTrace();
         }
+
+        Color lvlBColor = new Color(0.2,0.7,0.5,1);
+
+        for(int i = 0; i < t ; i++){
+
+            Text lvlNo = new Text();
+            StackPane stack = new StackPane();
+            Circle lvl = new Circle();
+
+            lvlNo.setText(Integer.toString(i));
+            lvl.setRadius(38);
+            lvl.setFill(lvlBColor);
+            lvl.setSmooth(true);
+            if(i > 3 && i < 8){
+                stack.setLayoutY(310);
+                stack.setLayoutX(200 + (i-4)*100);
+            } else if (i > 7) {
+                stack.setLayoutY(410);
+                stack.setLayoutX(200 + (i-8)*100);
+            }else{
+                stack.setLayoutY(210);
+                stack.setLayoutX(200 + i * 100);
+            }
+
+            stack.getChildren().addAll(lvl,lvlNo);
+            myPane.getChildren().add(stack);
+            stack.setOnMouseClicked(eventHandler);
+        }
+
+
+
     }
 }

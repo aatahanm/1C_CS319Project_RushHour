@@ -50,4 +50,9 @@ public class Car extends Vehicle {
     public int getY(){
         return y;
     }
+
+    @Override
+    public boolean isMainCar() {
+        return true;
+    }
 }

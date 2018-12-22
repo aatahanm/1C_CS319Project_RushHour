@@ -1,5 +1,8 @@
 package rh;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * The Level class contains the map of a Level. The function can create a map by
  * putting given Vehicle objects inside the field, initialize the end points,
@@ -19,7 +22,7 @@ public class Level {
     private int endY;
     private Car objCar;
     private int highScore;
-    private Vehicle[] vCollection;
+    private ArrayList<Vehicle> vCollection;
     private int vLength;
 
     /**
@@ -32,7 +35,7 @@ public class Level {
         objCar = new Car();
         unlocked = false;
         highScore = 0;
-        Vehicle[] vCollection;
+        vCollection = new ArrayList<>();
         vLength = 0;
     }
 
@@ -44,27 +47,27 @@ public class Level {
      * @param endY        int y coordinate of the endpoint.
      * @param objCar      Car object.
      */
-    public void createLevel(Vehicle[] vCollection, int endX, int endY, Car objCar) {
+    public void createLevel(ArrayList<Vehicle> vCollection, int endX, int endY, Car objCar) {
         this.objCar = objCar;
         this.endX = endX;
         this.endY = endY;
         this.vCollection = vCollection;
-        this.vLength = vCollection.length;
+        this.vLength = vCollection.size();
 
         for (int i = 0; i < maxHeight; i++) {
             for (int j = 0; j < maxWidth; j++) {
                 map[i][j] = 0;
             }
         }
-        if (vCollection.length != 0) {
-            for (int i = 0; i < vCollection.length; i++) {
-                if (vCollection[i].getDirection().equals("V")) {
-                    for (int j = 0; j < vCollection[i].getLength(); j++) {
-                        map[vCollection[i].getX() + j][vCollection[i].getY()] = 1;
+        if (vCollection.size() != 0) {
+            for (int i = 0; i < vCollection.size(); i++) {
+                if (vCollection.get(i).getDirection().equals("V")) {
+                    for (int j = 0; j < vCollection.get(i).getLength(); j++) {
+                        map[vCollection.get(i).getX() + j][vCollection.get(i).getY()] = 1;
                     }
-                } else if (vCollection[i].getDirection().equals("H")) {
-                    for (int j = 0; j < vCollection[i].getLength(); j++) {
-                        map[vCollection[i].getX()][vCollection[i].getY() + j] = 1;
+                } else if (vCollection.get(i).getDirection().equals("H")) {
+                    for (int j = 0; j < vCollection.get(i).getLength(); j++) {
+                        map[vCollection.get(i).getX()][vCollection.get(i).getY() + j] = 1;
                     }
                 }
 
@@ -159,7 +162,7 @@ public class Level {
     }
 
     public Vehicle getVehicle(int x) {
-        return vCollection[x];
+        return vCollection.get(x);
     }
 
     public int getVehicleCount() {

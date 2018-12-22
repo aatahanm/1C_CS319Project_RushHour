@@ -1,12 +1,14 @@
 package rh;
 
 
+import java.util.ArrayList;
+
 /**
  * Created by aatah on 11/12/2018.
  */
 public class Game {
 
-    private Level[] levels;
+    private ArrayList<Level> levels;
     private int score;
     private int time;
 
@@ -14,16 +16,16 @@ public class Game {
      *
      */
     Game() {
-        levels = new Level[10];
+        levels = new ArrayList<>();
         score = 0;
         time = 0;
     }
 
     public Level selectLevel(int i) {
-        return levels[i];
+        return levels.get(i);
     }
 
     public String highlightScore(int i) {
-        return "HS:" + levels[i].getHighScore();
+        return "HS:" + levels.get(i).getHighScore();
     }
 }
