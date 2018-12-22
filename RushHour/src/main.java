@@ -10,10 +10,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.util.Duration;
-import rh.Car;
-import rh.Level;
-import rh.Sound;
-import rh.Vehicle;
+import rh.*;
 import rhGUI.LevelPlayViewController;
 import rhGUI.MenuViewController;
 
@@ -29,11 +26,12 @@ public class main extends Application{
 
     private boolean music = true;
     private Sound backgroundMusic = new Sound();
+    private Storage data = new Storage();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController(backgroundMusic, true,true);
+            MenuViewController cont = new MenuViewController(backgroundMusic, true,true, data);
             cont.playMusic(music);
             loader.setController(cont);
             Pane root = loader.load();

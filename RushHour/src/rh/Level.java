@@ -39,6 +39,45 @@ public class Level {
         vLength = 0;
     }
 
+    public Level(int map[][], boolean unlocked, int endX, int endY, Car objCar, int highScore,
+                 ArrayList<Vehicle> vCollection, int vLength){
+
+        int mp[][] = new int[6][6];
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++ ){
+                mp[i][j] = map[i][j];
+            }
+        }
+        this.map = mp;
+        this.unlocked = unlocked;
+        this.endY = endY;
+        this.endX = endX;
+
+        this.highScore = highScore;
+
+        ArrayList<Vehicle> vc = new ArrayList<>();
+        Car c = new Car();
+        c.createVehicle(vCollection.get(0).getX(),vCollection.get(0).getY(),vCollection.get(0).getLength(),
+                vCollection.get(0).getDirection());
+        this.objCar = c;
+
+        vc.add(c);
+        for (int i = 1;  i < vCollection.size(); i++ ){
+            Vehicle v = new Vehicle();
+            v.createVehicle(vCollection.get(i).getX(),vCollection.get(i).getY(),
+                    vCollection.get(i).getLength(),vCollection.get(i).getDirection());
+            vc.add(v);
+        }
+
+
+        //c.createVehicle(objCar.getX(),objCar.getY(),objCar.getLength(),objCar.getDirection());
+        this.objCar = (Car)vc.get(0);
+
+        this.vCollection = vc;
+
+        this.vLength = vLength;
+    }
+
     /**
      * A function that creates the initial level according given parameters.
      *
@@ -146,10 +185,10 @@ public class Level {
      * @return 'true' if a level is finished 'false' if not
      */
     public boolean isFinished() {
+        System.out.println("heyoo");
         if (objCar.getDirection().equals("H")) {
             if ((objCar.getY() + objCar.getLength() - 1) == endY
                     && objCar.getX() == endX) {
-
                 return true;
             }
         } else if (objCar.getDirection().equals("V")) {
@@ -161,6 +200,10 @@ public class Level {
         return false;
     }
 
+    public void setHighScore (int score){
+        highScore = score;
+    }
+
     public Vehicle getVehicle(int x) {
         return vCollection.get(x);
     }
@@ -169,10 +212,27 @@ public class Level {
         return vLength;
     }
 
+    public int[][] getMap(){ return map;}
+
+    public ArrayList<Vehicle> getvCollection(){return vCollection;}
+
+    public int getEndX(){ return endX;}
+
+    public int getEndY(){ return endY;}
+
+    public Car getObjCar(){ return objCar;}
+
+    public boolean getUnlocked(){ return unlocked;}
+
     //TODO
     public int getHighScore() {
         return highScore;
     }
+
+    public void unlockLevel(){
+        unlocked = true;
+    }
+
 
     /**
      * A function that stores the map as a string

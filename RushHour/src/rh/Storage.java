@@ -12,6 +12,11 @@ public class Storage {
 
     public Storage() {
         levels = new ArrayList<>();
+        try {
+            createsVehicles(takeLevelsFromFile());
+        }catch ( Exception e){
+            e.printStackTrace();
+        }
     }
 
     private String takeLevelsFromFile() throws Exception {
@@ -28,13 +33,6 @@ public class Storage {
         return result;
     }
 
-    public void printFile(){
-        try {
-            System.out.print(takeLevelsFromFile());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private ArrayList<Level> createsVehicles(String str) {
         //Vehicle[] fleet = new Vehicle[20];
@@ -80,12 +78,12 @@ public class Storage {
         return levels;
     }
 
-    public ArrayList<Level> getLevels() throws Exception {
-        return this.createsVehicles( this.takeLevelsFromFile());
+    public int getLevelsSize() throws Exception {
+        return levels.size();
     }
 
     public Level getLevel(int index)throws Exception{
-        return (this.createsVehicles( this.takeLevelsFromFile())).get(index);
+        return levels.get(index);
     }
 }
 

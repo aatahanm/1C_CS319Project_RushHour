@@ -30,15 +30,16 @@ public class LevelSelectionViewController {
     private Sound backgroundMusic;
     private Level selectedLevel;
     private boolean sound;
-    private Storage test ;
+    private Storage data ;
 
     @FXML
     Pane myPane = new Pane();
 
-    public LevelSelectionViewController(Sound backgroundMusic, boolean music, boolean sound){
+    public LevelSelectionViewController(Sound backgroundMusic, boolean music, boolean sound, Storage data){
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sound = sound;
+        this.data = data;
     }
 
     public void openLevel(MouseEvent e)
@@ -58,7 +59,7 @@ public class LevelSelectionViewController {
         //Stage primaryStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController(backgroundMusic, music, sound);
+            MenuViewController cont = new MenuViewController(backgroundMusic, music, sound,data);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -75,16 +76,17 @@ public class LevelSelectionViewController {
 
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
-
+            int levelNo = 0;
             try {
-                selectedLevel = test.getLevel(Integer.valueOf(text.getText())-1);
+                levelNo = Integer.valueOf(text.getText())-1;
+                selectedLevel = data.getLevel(levelNo);
             }catch (Exception es) {
                 es.printStackTrace();
             }
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
-                LevelPlayViewController cont = new LevelPlayViewController(selectedLevel, backgroundMusic, music, sound);
+                LevelPlayViewController cont = new LevelPlayViewController(selectedLevel, backgroundMusic, music, sound,data,levelNo);
                 loader.setController(cont);
                 Pane root = loader.load();
                 stage.setScene(new Scene(root, 800, 600));
@@ -100,17 +102,24 @@ public class LevelSelectionViewController {
     public void initialize(){
 
         int t= 0;
-        test = new Storage();
-        try {
-            t = test.getLevels().size();
 
+        try {
+            t = data.getLevelsSize();
+            data.getLevel(0).unlockLevel();
         }catch (Exception es) {
             es.printStackTrace();
         }
 
         Color lvlBColor = new Color(0.2,0.7,0.5,1);
+        Color lvlNoColor = new Color(0.5,0.9,0.1,1);
 
         for(int i = 0; i < t ; i++){
+            Level l = new Level();
+            try {
+                l = data.getLevel(i);
+            }catch (Exception es) {
+                es.printStackTrace();
+            }
 
             Text lvlNo = new Text();
             StackPane stack = new StackPane();
@@ -118,7 +127,12 @@ public class LevelSelectionViewController {
 
             lvlNo.setText(Integer.toString(i+1));
             lvl.setRadius(38);
-            lvl.setFill(lvlBColor);
+            if(l.getUnlocked()) {
+                lvl.setFill(lvlBColor);
+            }else{
+                lvl.setFill(lvlNoColor);
+            }
+            lvl.setStroke(Color.BLACK);
             lvl.setSmooth(true);
             if(i > 3 && i < 8){
                 stack.setLayoutY(310);

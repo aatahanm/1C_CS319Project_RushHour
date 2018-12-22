@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import rh.Sound;
+import rh.Storage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,11 +23,13 @@ public class CreditsViewController {
     private Sound player = new Sound();
     private Sound backgroundMusic;
     private boolean sound;
+    private Storage data;
 
-    public CreditsViewController (Sound backgroundMusic,boolean music, boolean sound){
+    public CreditsViewController (Sound backgroundMusic,boolean music, boolean sound,Storage data){
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sound = sound;
+        this.data = data;
     }
 
     /**
@@ -39,7 +42,7 @@ public class CreditsViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController(backgroundMusic, music,sound);
+            MenuViewController cont = new MenuViewController(backgroundMusic, music,sound,data);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));

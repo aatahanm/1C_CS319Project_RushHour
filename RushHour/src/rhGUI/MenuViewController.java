@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import rh.Sound;
+import rh.Storage;
 
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class MenuViewController {
     private Sound backgroundMusic;
     private boolean music;
     private boolean sound;
+    private Storage data;
+
 
     @FXML
     ImageView exit = new ImageView();
@@ -41,10 +44,11 @@ public class MenuViewController {
     ImageView soundButton = new ImageView();
 
 
-    public MenuViewController (Sound backgroundMusic, boolean music, boolean sound){
+    public MenuViewController (Sound backgroundMusic, boolean music, boolean sound, Storage data){
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sound = sound;
+        this.data = data;
     }
 
     public void play(MouseEvent e) {
@@ -53,7 +57,7 @@ public class MenuViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelSelectionView.fxml"));
-            LevelSelectionViewController cont = new LevelSelectionViewController(backgroundMusic, music, sound);
+            LevelSelectionViewController cont = new LevelSelectionViewController(backgroundMusic, music, sound,data);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -89,7 +93,7 @@ public class MenuViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/CreditsView.fxml"));
-            CreditsViewController cont = new CreditsViewController(backgroundMusic, music, sound);
+            CreditsViewController cont = new CreditsViewController(backgroundMusic, music, sound,data);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
