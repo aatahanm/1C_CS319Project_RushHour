@@ -27,12 +27,10 @@ public class Storage {
         String st = "";
         String result = "";
         while ((st = br.readLine()) != null) {
-            //System.out.println(st);
             result += st;
         }
         return result;
     }
-
 
     private ArrayList<Level> createsVehicles(String str) {
         //Vehicle[] fleet = new Vehicle[20];
@@ -48,30 +46,26 @@ public class Storage {
                     int y = (int) Integer.parseInt(str.substring(j + 3, j + 4));
                     String direction = str.substring(j + 7, j + 8);
                     int length = (int) Integer.parseInt(str.substring(j + 11, j + 12));
-                    //System.out.println("x: " + x + " y: " + y + " direction: " + direction + " length: " + length);
                     if (j == i + 1) {
-                        template = new Car();
+                        template = new MainCar();
                     } else {
                         template = new Vehicle();
                     }
                     template.createVehicle(x, y, length, direction);
                     fleet.add(template);
-                    //System.out.print("\n"+fleet[index].getDirection());
                     index++;
                     if (str.charAt(j + 12) == '&') {
                         if(indexLevel == 12){
                             break;
                         }
-                        //System.out.println( " level tamam" );
-                        //System.out.println( fleetA[0]);
+
                         lvl = new Level();
-                        lvl.createLevel(fleet, 2, 5, (Car) (fleet.get(0)));
+                        lvl.createLevel(fleet, 2, 5, (MainCar) (fleet.get(0)));
                         levels.add(lvl);
                         indexLevel++;
                         break;
                     }
-                    if (indexLevel == 2)
-                        break;
+
                 }
             }
         }

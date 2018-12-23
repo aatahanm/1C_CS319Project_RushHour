@@ -13,7 +13,7 @@
             <Image url="@Images/background.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="276.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Level">
+      <Text fill="#d43d3d" layoutX="276.0" layoutY="112.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="3.0" text="Select Level">
          <font>
             <Font size="48.0" />
          </font>
@@ -23,9 +23,9 @@
             <Image url="@Images/Credits_Parchment.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="704.0" layoutY="504.0" onMouseClicked="#returnMenu" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="homeButton" fitHeight="77.0" fitWidth="77.0" layoutX="704.0" layoutY="504.0" onMouseClicked="#returnMenu" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/return.png" />
+            <Image url="@Images/home.png" />
          </image>
       </ImageView>
    </children>

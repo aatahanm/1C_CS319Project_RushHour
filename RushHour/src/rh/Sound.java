@@ -65,7 +65,40 @@ public class Sound {
         }
     }
 
+    public void playSpecial12Popup(boolean sound){
+        if(sound) {
+            pick = new Media(Paths.get("src/rhGUI/Sound/special12jokerlaugh.mp3").toUri().toString());
+            player = new MediaPlayer(pick);
+            player.setVolume(1.0);
+            player.play();
+        }
+    }
+
+    public void playSpecial1Background(boolean sound){
+        if(sound) {
+            pick = new Media(Paths.get("src/rhGUI/Sound/bombCounter.mp3").toUri().toString());
+            player = new MediaPlayer(pick);
+            player.setVolume(1.0);
+            player.play();
+        }
+    }
+
+    public void playSpecial1Finished(boolean sound){
+        if(sound) {
+            pick = new Media(Paths.get("src/rhGUI/Sound/special1finished.mp3").toUri().toString());
+            player = new MediaPlayer(pick);
+            player.setVolume(1.0);
+            player.play();
+        }
+    }
+
     public void stopMusic() {
         player.stop();
+    }
+
+    public void stopEffect(boolean sound){
+        if(sound) {
+            player.stop();
+        }
     }
 }

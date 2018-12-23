@@ -1,6 +1,5 @@
 package rh;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +19,7 @@ public class Level {
     private boolean unlocked;
     private int endX;
     private int endY;
-    private Car objCar;
+    private MainCar objMainCar;
     private int highScore;
     private ArrayList<Vehicle> vCollection;
     private int vLength;
@@ -32,15 +31,15 @@ public class Level {
         map = new int[maxHeight][maxHeight];
         endX = 0;
         endY = 0;
-        objCar = new Car();
+        objMainCar = new MainCar();
         unlocked = false;
         highScore = 0;
         vCollection = new ArrayList<>();
         vLength = 0;
     }
 
-    public Level(int map[][], boolean unlocked, int endX, int endY, Car objCar, int highScore,
-                 ArrayList<Vehicle> vCollection, int vLength){
+    public void copyLevel(int map[][], boolean unlocked, int endX, int endY, MainCar objMainCar, int highScore,
+                          ArrayList<Vehicle> vCollection, int vLength){
 
         int mp[][] = new int[6][6];
         for(int i = 0; i < 6; i++){
@@ -56,10 +55,10 @@ public class Level {
         this.highScore = highScore;
 
         ArrayList<Vehicle> vc = new ArrayList<>();
-        Car c = new Car();
+        MainCar c = new MainCar();
         c.createVehicle(vCollection.get(0).getX(),vCollection.get(0).getY(),vCollection.get(0).getLength(),
                 vCollection.get(0).getDirection());
-        this.objCar = c;
+        this.objMainCar = c;
 
         vc.add(c);
         for (int i = 1;  i < vCollection.size(); i++ ){
@@ -70,8 +69,8 @@ public class Level {
         }
 
 
-        //c.createVehicle(objCar.getX(),objCar.getY(),objCar.getLength(),objCar.getDirection());
-        this.objCar = (Car)vc.get(0);
+        //c.createVehicle(objMainCar.getX(),objMainCar.getY(),objMainCar.getLength(),objMainCar.getDirection());
+        this.objMainCar = (MainCar)vc.get(0);
 
         this.vCollection = vc;
 
@@ -84,10 +83,10 @@ public class Level {
      * @param vCollection Vehicle array. All vehicles inside a map.
      * @param endX        int x coordinate of the endpoint.
      * @param endY        int y coordinate of the endpoint.
-     * @param objCar      Car object.
+     * @param objMainCar      MainCar object.
      */
-    public void createLevel(ArrayList<Vehicle> vCollection, int endX, int endY, Car objCar) {
-        this.objCar = objCar;
+    public void createLevel(ArrayList<Vehicle> vCollection, int endX, int endY, MainCar objMainCar) {
+        this.objMainCar = objMainCar;
         this.endX = endX;
         this.endY = endY;
         this.vCollection = vCollection;
@@ -180,20 +179,19 @@ public class Level {
     }
 
     /**
-     * A function that checks whether objCar has passed through endpoint
+     * A function that checks whether objMainCar has passed through endpoint
      *
      * @return 'true' if a level is finished 'false' if not
      */
     public boolean isFinished() {
-        System.out.println("heyoo");
-        if (objCar.getDirection().equals("H")) {
-            if ((objCar.getY() + objCar.getLength() - 1) == endY
-                    && objCar.getX() == endX) {
+        if (objMainCar.getDirection().equals("H")) {
+            if ((objMainCar.getY() + objMainCar.getLength() - 1) == endY
+                    && objMainCar.getX() == endX) {
                 return true;
             }
-        } else if (objCar.getDirection().equals("V")) {
-            if ((objCar.getX() + objCar.getLength() - 1) == endX
-                    && objCar.getY() == endY) {
+        } else if (objMainCar.getDirection().equals("V")) {
+            if ((objMainCar.getX() + objMainCar.getLength() - 1) == endX
+                    && objMainCar.getY() == endY) {
                 return true;
             }
         }
@@ -220,7 +218,7 @@ public class Level {
 
     public int getEndY(){ return endY;}
 
-    public Car getObjCar(){ return objCar;}
+    public MainCar getObjMainCar(){ return objMainCar;}
 
     public boolean getUnlocked(){ return unlocked;}
 

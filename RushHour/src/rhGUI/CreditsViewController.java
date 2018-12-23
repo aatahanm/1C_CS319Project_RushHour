@@ -1,16 +1,18 @@
 package rhGUI;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import rh.Sound;
 import rh.Storage;
 
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -25,11 +27,25 @@ public class CreditsViewController {
     private boolean sound;
     private Storage data;
 
+    @FXML
+    ImageView homeButton;
+
     public CreditsViewController (Sound backgroundMusic,boolean music, boolean sound,Storage data){
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sound = sound;
         this.data = data;
+    }
+
+    public void homeButtonEntered(){
+        Image image= new Image("/rhGUI/Images/homeO.png");
+        homeButton.setImage(image);
+        player.playMouseOverSound(sound);
+    }
+
+    public void homeButtonExited(){
+        Image image= new Image("/rhGUI/Images/home.png");
+        homeButton.setImage(image);
     }
 
     /**

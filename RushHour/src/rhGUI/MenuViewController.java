@@ -3,7 +3,6 @@ package rhGUI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,11 +10,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import rh.Sound;
-import rh.Storage;
+import rh.*;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * This is the controller class of MenuView screen
@@ -49,6 +48,42 @@ public class MenuViewController {
         this.music = music;
         this.sound = sound;
         this.data = data;
+    }
+
+    public void openTutorial(MouseEvent e){
+        Node source = (Node) e.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+
+        Tutorial t = new Tutorial();
+        ArrayList<Vehicle> vCollection = new ArrayList<>();
+        MainCar objMainCar = new MainCar();
+
+        objMainCar.createVehicle(2,1,2,"H");
+        vCollection.add(objMainCar);
+
+        Vehicle vehicle = new Vehicle();
+
+        vehicle.createVehicle(1,3,3,"V");
+        vCollection.add(vehicle);
+
+        vehicle = new Vehicle();
+
+        vehicle.createVehicle(4,3,2,"H");
+        vCollection.add(vehicle);
+
+        t.createLevel(vCollection,2,5,(MainCar)vCollection.get(0));
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
+            LevelPlayViewController cont = new LevelPlayViewController((Level)t, backgroundMusic, music, sound,data,13);
+            loader.setController(cont);
+            Pane root = loader.load();
+            stage.setScene(new Scene(root, 800, 600));
+        } catch (IOException evnt) {
+            evnt.printStackTrace();
+        }
+
+        player.playClickSound(sound);
+
     }
 
     public void play(MouseEvent e) {

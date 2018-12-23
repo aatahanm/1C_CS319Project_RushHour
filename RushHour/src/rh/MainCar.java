@@ -1,19 +1,19 @@
 package rh;
 
 /**
- * The Car class extends the Vehicle class and its functions.
+ * The MainCar class extends the Vehicle class and its functions.
  * the class is used to separate the objective car with the
  * rest of the Vehicles.
  * Created by aatahanm on 11/11/2018.
  */
-public class Car extends Vehicle {
+public class MainCar extends Vehicle {
 
     private int x;
     private int y;
     private int length;
     private String direction;
 
-    public Car (){
+    public MainCar(){
         super();
     }
 

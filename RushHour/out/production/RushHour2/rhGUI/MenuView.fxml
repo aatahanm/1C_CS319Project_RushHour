@@ -13,7 +13,7 @@
             <Image url="@Images/background.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="tutorial" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="275.0" onMouseEntered="#mouseEnteredTutorial" onMouseExited="#mouseExitedTutorial" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="tutorial" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="275.0" onMouseClicked="#openTutorial" onMouseEntered="#mouseEnteredTutorial" onMouseExited="#mouseExitedTutorial" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/Tutorial.png" />
          </image>

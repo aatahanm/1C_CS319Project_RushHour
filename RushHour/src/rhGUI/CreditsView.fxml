@@ -14,7 +14,7 @@
             <Image url="@Images/background.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="202.0" layoutY="97.0" text="CREATED BY">
+      <Label layoutX="296.0" layoutY="99.0" text="CREATED BY">
          <font>
             <Font size="36.0" />
          </font>
@@ -49,9 +49,9 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="705.0" layoutY="504.0" onMouseClicked="#returnMenu" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="homeButton" fitHeight="77.0" fitWidth="77.0" layoutX="705.0" layoutY="504.0" onMouseClicked="#returnMenu" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/return.png" />
+            <Image url="@Images/home.png" />
          </image>
       </ImageView>
    </children>

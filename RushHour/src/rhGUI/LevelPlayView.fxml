@@ -61,14 +61,14 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="602.0" layoutY="358.0" onMouseClicked="#returnMenu" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/return.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="679.0" layoutY="367.0" onMouseClicked="#restartLevel" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="homeButton" fitHeight="68.0" fitWidth="68.0" layoutX="602.0" layoutY="358.0" onMouseClicked="#returnMenu" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/home.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="returnButton" fitHeight="59.0" fitWidth="59.0" layoutX="679.0" layoutY="367.0" onMouseClicked="#restartLevel" onMouseEntered="#returnButtonEntered" onMouseExited="#returnButtonExited" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/return.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="101.0" layoutX="586.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="162.0" />

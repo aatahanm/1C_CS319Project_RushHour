@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +35,8 @@ public class LevelSelectionViewController {
 
     @FXML
     Pane myPane = new Pane();
+    @FXML
+    ImageView homeButton;
 
     public LevelSelectionViewController(Sound backgroundMusic, boolean music, boolean sound, Storage data){
         this.backgroundMusic = backgroundMusic;
@@ -42,8 +45,15 @@ public class LevelSelectionViewController {
         this.data = data;
     }
 
-    public void openLevel(MouseEvent e)
-           {
+    public void homeButtonEntered(){
+        Image image= new Image("/rhGUI/Images/homeO.png");
+        homeButton.setImage(image);
+        player.playMouseOverSound(sound);
+    }
+
+    public void homeButtonExited(){
+        Image image= new Image("/rhGUI/Images/home.png");
+        homeButton.setImage(image);
     }
 
     /**
@@ -127,11 +137,7 @@ public class LevelSelectionViewController {
 
             lvlNo.setText(Integer.toString(i+1));
             lvl.setRadius(38);
-            if(l.getUnlocked()) {
-                lvl.setFill(lvlBColor);
-            }else{
-                lvl.setFill(lvlNoColor);
-            }
+
             lvl.setStroke(Color.BLACK);
             lvl.setSmooth(true);
             if(i > 3 && i < 8){
@@ -145,7 +151,18 @@ public class LevelSelectionViewController {
                 stack.setLayoutX(200 + i * 100);
             }
 
-            stack.getChildren().addAll(lvl,lvlNo);
+            if(l.getUnlocked()) {
+                lvl.setFill(Color.LIMEGREEN);
+                stack.getChildren().addAll(lvl,lvlNo);
+            }else{
+                ImageView locked = new ImageView("rhGUI/Images/levelLocked.png");
+                locked.setFitHeight(50);
+                locked.setFitWidth(35);
+                lvl.setFill(Color.DARKRED);
+                stack.getChildren().addAll(lvl,lvlNo, locked);
+            }
+
+
             myPane.getChildren().add(stack);
             stack.setOnMouseClicked(eventHandler);
         }
