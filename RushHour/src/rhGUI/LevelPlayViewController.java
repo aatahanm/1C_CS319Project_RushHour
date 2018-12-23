@@ -31,6 +31,7 @@ import javafx.util.Duration;
 import rh.Level;
 import rh.Sound;
 import rh.Storage;
+import rh.Tutorial;
 
 import java.io.IOException;
 import java.util.Random;
@@ -59,6 +60,14 @@ public class LevelPlayViewController {
     private ImageView popup2;
     private boolean specialStarted = false;
     private Pane specialPane;
+    private Tutorial t = new Tutorial();
+
+    @FXML
+    private ImageView popupBackground = new ImageView();
+    @FXML
+    private ImageView play = new ImageView();
+    @FXML
+    private Text endMsg = new Text();
 
     @FXML
     private ImageView backgroundImg;
@@ -97,7 +106,7 @@ public class LevelPlayViewController {
      *
      * @param sLevel seleted Level
      */
-    public LevelPlayViewController(Level sLevel, Sound backgroundMusic, boolean music, boolean sound, Storage data,int levelNum){
+    public LevelPlayViewController(Level sLevel, Sound backgroundMusic, boolean music, boolean sound, Storage data, int levelNum) {
         this.backgroundMusic = backgroundMusic;
         this.music = music;
         this.sLevel = sLevel;
@@ -126,25 +135,25 @@ public class LevelPlayViewController {
         }
     }
 
-    public void homeButtonEntered(){
-        Image image= new Image("/rhGUI/Images/homeO.png");
+    public void homeButtonEntered() {
+        Image image = new Image("/rhGUI/Images/homeO.png");
         homeButton.setImage(image);
         player.playMouseOverSound(sound);
     }
 
-    public void homeButtonExited(){
-        Image image= new Image("/rhGUI/Images/home.png");
+    public void homeButtonExited() {
+        Image image = new Image("/rhGUI/Images/home.png");
         homeButton.setImage(image);
     }
 
-    public void returnButtonEntered(){
-        Image image= new Image("/rhGUI/Images/returnO.png");
+    public void returnButtonEntered() {
+        Image image = new Image("/rhGUI/Images/returnO.png");
         returnButton.setImage(image);
         player.playMouseOverSound(sound);
     }
 
-    public void returnButtonExited(){
-        Image image= new Image("/rhGUI/Images/return.png");
+    public void returnButtonExited() {
+        Image image = new Image("/rhGUI/Images/return.png");
         returnButton.setImage(image);
     }
 
@@ -160,7 +169,7 @@ public class LevelPlayViewController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/MenuView.fxml"));
-            MenuViewController cont = new MenuViewController(backgroundMusic, music,sound,data);
+            MenuViewController cont = new MenuViewController(backgroundMusic, music, sound, data);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -169,7 +178,7 @@ public class LevelPlayViewController {
             event.printStackTrace();
         }
         player.playClickSound(sound);
-        if(levelNum+1 == 3 && specialStarted)
+        if (levelNum + 1 == 3 && specialStarted)
             special1.stopEffect(sound);
     }
 
@@ -178,11 +187,11 @@ public class LevelPlayViewController {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         player.playClickSound(sound);
-        if(levelNum+1 == 3)
+        if (levelNum + 1 == 3)
             special1.stopEffect(sound);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelPlayView.fxml"));
-            LevelPlayViewController cont = new LevelPlayViewController(sLevel,backgroundMusic,music,sound,data, levelNum);
+            LevelPlayViewController cont = new LevelPlayViewController(sLevel, backgroundMusic, music, sound, data, levelNum);
             loader.setController(cont);
             Pane root = loader.load();
             stage.setScene(new Scene(root, 800, 600));
@@ -197,16 +206,15 @@ public class LevelPlayViewController {
      */
     private void updateTime() {
         int seconds = timeSeconds.get();
-        if(levelNum+1 == 3 || levelNum+1 == 6 ||levelNum+1 == 9 || levelNum+1 == 12) {
+        if (levelNum + 1 == 3 || levelNum + 1 == 6 || levelNum + 1 == 9 || levelNum + 1 == 12) {
             timeSeconds.set(seconds - 1);
-            if (timeSeconds.get() < 57 && levelNum+1 == 3){
+            if (timeSeconds.get() < 57 && levelNum + 1 == 3) {
                 popup.setImage(null);
-            }else if(timeSeconds.get() < 57 && levelNum+1 == 12){
+            } else if (timeSeconds.get() < 57 && levelNum + 1 == 12) {
                 popup.setImage(null);
                 popup2.setImage(null);
             }
-        }
-        else {
+        } else {
             timeSeconds.set(seconds + 1);
             if (seconds == 59) {
                 timeMinutes++;
@@ -215,8 +223,8 @@ public class LevelPlayViewController {
             }
         }
 
-        if (levelNum + 1 == 3 || levelNum + 1 == 6 || levelNum + 1 == 9) {
-            if(timeSeconds.get() == 0){
+        if (levelNum + 1 == 3 || levelNum + 1 == 6 || levelNum + 1 == 9 || levelNum + 1 == 12) {
+            if (timeSeconds.get() == 0) {
                 finished = true;
                 ImageView dialogB = new ImageView("rhGUI/Images/Credits_Parchment.png");
 
@@ -246,11 +254,11 @@ public class LevelPlayViewController {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             player.playClickSound(sound);
-            int nextLvlNum = levelNum+1;
+            int nextLvlNum = levelNum + 1;
             Level next = new Level();
             try {
                 next = data.getLevel(nextLvlNum);
-            }catch(Exception evnt){
+            } catch (Exception evnt) {
                 evnt.printStackTrace();
             }
 
@@ -278,7 +286,7 @@ public class LevelPlayViewController {
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/rhGUI/LevelSelectionView.fxml"));
-                LevelSelectionViewController cont = new LevelSelectionViewController(backgroundMusic, music, sound,data);
+                LevelSelectionViewController cont = new LevelSelectionViewController(backgroundMusic, music, sound, data);
                 loader.setController(cont);
                 Pane root = loader.load();
                 stage.setScene(new Scene(root, 800, 600));
@@ -296,7 +304,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/nextLevelOver.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -308,7 +316,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/nextLevel.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -320,7 +328,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/levelSelectOver.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -332,7 +340,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/okButtonOver.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -344,7 +352,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/okButton.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -356,7 +364,7 @@ public class LevelPlayViewController {
         @Override
         public void handle(MouseEvent event) {
             Image a = new Image("rhGUI/Images/levelSelect.png");
-            ImageView s = (ImageView)event.getSource();
+            ImageView s = (ImageView) event.getSource();
             s.setImage(a);
             player.playMouseOverSound(sound);
 
@@ -367,7 +375,7 @@ public class LevelPlayViewController {
     EventHandler<MouseEvent> startSpecialLevel = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            if(levelNum+1 == 3) {
+            if (levelNum + 1 == 3) {
                 special1.playSpecial1Background(sound);
                 popup = new ImageView("rhGUI/Images/special1popup.png");
 
@@ -378,7 +386,7 @@ public class LevelPlayViewController {
 
                 myPane.getChildren().add(popup);
                 player.playSpecialPopup(sound);
-            }else if (levelNum+1 == 12){
+            } else if (levelNum + 1 == 12) {
                 popup = new ImageView("rhGUI/Images/special12popup1.png");
 
                 popup.setFitHeight(375);
@@ -391,13 +399,25 @@ public class LevelPlayViewController {
                 popup2.setLayoutX(370);
                 popup2.setLayoutY(150);
 
-                myPane.getChildren().addAll(popup,popup2);
+                myPane.getChildren().addAll(popup, popup2);
                 player.playSpecial12Popup(sound);
+            } else if (levelNum == 13) {
+                startTimer();
+                if(t.instructionLeft()) {
+                    popUpTutorialInformation(t.getNextInstruction(),t.getNextLocX(),t.getNextLocY(),t.getICount());
+                }else{
+                    specialPane.getChildren().removeAll();
+                    specialPane.setVisible(false);
+                    myPane.getChildren().remove(specialPane);
+                }
             }
+            if(levelNum != 13) {
                 startTimer();
                 specialStarted = true;
                 specialPane.getChildren().removeAll();
                 specialPane.setVisible(false);
+            }
+
 
         }
 
@@ -435,15 +455,70 @@ public class LevelPlayViewController {
         }
     }
 
-    private void popUpLevelInformation(String text ){
-        ImageView popupBackground = new ImageView("rhGUI/Images/Credits_Parchment.png");
-        ImageView play = new ImageView("rhGUI/Images/okButton.png");
+    private void popUpTutorialInformation(String text,int x , int y,int popupNo){
+        specialStarted = true;
+        myPane.getChildren().remove(specialPane);
+        specialPane.setLayoutX(0);
+        specialPane.setLayoutY(0);
+
+        myPane.getChildren().add(specialPane);
+
+        Image ply = new Image("rhGUI/Images/tutorialpopup.png");
+
+        if(popupNo > 4){
+            ply = new Image("rhGUI/Images/tutorialpopup2.png");
+        }else if (popupNo == 4){
+            ply = new Image("rhGUI/Images/tutorialpopup3.png");
+        }
+        popupBackground.setImage(ply);
+        Image button = new Image("rhGUI/Images/okButton.png");
+        play.setImage(button);
+
+        play.setLayoutX(130);
+        play.setLayoutY(140);
+        if(popupNo == 4){
+            play.setLayoutY(192);
+        }
+        play.setFitHeight(36);
+        play.setFitWidth(82);
+
+
+        endMsg.setText(text);
+
+        endMsg.setLayoutX(69);
+        endMsg.setLayoutY(55);
+        if(popupNo == 4){
+            endMsg.setLayoutY(110);
+        }
+        popupBackground.setFitHeight(250);
+        popupBackground.setFitWidth(340);
+        specialPane = new Pane();
+
+        specialPane.setLayoutX(x);
+        specialPane.setLayoutY(y);
+
+        specialPane.getChildren().addAll(popupBackground, endMsg, play);
+        play.setOnMouseClicked(startSpecialLevel);
+        play.setOnMouseEntered(okButtonEntered);
+        play.setOnMouseExited(okButtonExited);
+        myPane.getChildren().add(specialPane);
+
+    }
+
+    private void popUpLevelInformation(String text) {
+
+        Image ply = new Image("rhGUI/Images/Credits_Parchment.png");
+        popupBackground.setImage(ply);
+        Image button = new Image("rhGUI/Images/okButton.png");
+        play.setImage(button);
+
         play.setLayoutX(140);
         play.setLayoutY(200);
         play.setFitHeight(48);
         play.setFitWidth(110);
 
-        Text endMsg = new Text(text);
+
+        endMsg.setText(text);
         endMsg.setLayoutX(45);
         endMsg.setLayoutY(110);
         popupBackground.setFitHeight(300);
@@ -461,13 +536,12 @@ public class LevelPlayViewController {
         timeline.stop();
     }
 
-    private void popUpLevelFinished(){
+    private void popUpLevelFinished() {
         int highscore = 0;
-        if(levelNum+1 == 3 || levelNum+1 == 6 ||levelNum+1 == 9 || levelNum+1 == 12) {
-            highscore = 3000 - moveC*10 + timeSeconds.get()*20;
-        }
-        else {
-            highscore = 3000 - moveC*10 - timeSeconds.get()*20;
+        if (levelNum + 1 == 3 || levelNum + 1 == 6 || levelNum + 1 == 9 || levelNum + 1 == 12) {
+            highscore = 3000 - moveC * 10 + timeSeconds.get() * 20;
+        } else {
+            highscore = 3000 - moveC * 10 - timeSeconds.get() * 20;
         }
 
         ImageView dialogB = new ImageView("rhGUI/Images/Credits_Parchment.png");
@@ -489,21 +563,25 @@ public class LevelPlayViewController {
         selectLevel.setOnMouseClicked(returnLevelSelection);
         selectLevel.setOnMouseEntered(selectLevelEntered);
         selectLevel.setOnMouseExited(selectLevelExited);
-        Text endMsg;
 
-        if(sLevel.getHighScore() < highscore) {
-            endMsg = new Text("Congratulations! You completed this level\n" +
-                    "by breaking a new record!"
-                    +"\nPrevious Score was: "+ sLevel.getHighScore()
-                    +"\nYour Score is: "+ highscore+
-                    "\n\t    What would you like to do?\n");
+        if(levelNum != 13) {
+            if (sLevel.getHighScore() < highscore) {
+                endMsg = new Text("Congratulations! You completed this level\n" +
+                        "by breaking a new record!"
+                        + "\nPrevious Score was: " + sLevel.getHighScore()
+                        + "\nYour Score is: " + highscore +
+                        "\n\t    What would you like to do?\n");
 
-            sLevel.setHighScore(highscore);
+                sLevel.setHighScore(highscore);
+            } else {
+                endMsg = new Text("Congratulations! You completed this level.\n" +
+                        "\t    What would you like to do?\n"
+                        + "Your Score is: " + highscore
+                );
+            }
         }else{
-            endMsg = new Text("Congratulations! You completed this level.\n" +
-                    "\t    What would you like to do?\n"
-                    +"Your Score is: "+ highscore
-            );
+            endMsg = new Text("Congratulations! You completed the tutorial\n" +
+                    "you are ready to play the game!");
         }
         endMsg.setLayoutX(45);
         endMsg.setLayoutY(110);
@@ -519,7 +597,7 @@ public class LevelPlayViewController {
         s.getChildren().addAll(dialogB, endMsg, nextLevel, selectLevel);
 
         Level next = new Level();
-        if(levelNum +1 != 12 && levelNum != 13) {
+        if (levelNum + 1 != 12 && levelNum != 13) {
             try {
                 next = data.getLevel((levelNum + 1));
             } catch (Exception evnt) {
@@ -530,10 +608,9 @@ public class LevelPlayViewController {
         }
 
 
-
         myPane.getChildren().add(s);
         timeline.stop();
-        if(levelNum+1 == 3) {
+        if (levelNum + 1 == 3) {
             special1.stopEffect(sound);
             player.playSpecial1Finished(sound);
         }
@@ -573,7 +650,7 @@ public class LevelPlayViewController {
         vec.setOnMouseClicked(eventHandler);
     }
 
-    public void startTimer(){
+    public void startTimer() {
         timeline.setCycleCount(Animation.INDEFINITE); // repeat over and over again
         timeline.play();
         timeS.textProperty().bind(timeSeconds.asString());
@@ -587,14 +664,18 @@ public class LevelPlayViewController {
      * count by 1.
      */
     public void initialize() {
-    Level a = new Level();
-        levelNo.setText("Level: " + (levelNum+1));
-        if(levelNum == 13){
-        levelNo.setText("TUTORIAL");
+        Level a = new Level();
+        levelNo.setText("Level: " + (levelNum + 1));
+        if (levelNum == 13) {
+            levelNo.setText("TUTORIAL");
         }
-        a.copyLevel(sLevel.getMap(),sLevel.getUnlocked(),sLevel.getEndX(),
-                sLevel.getEndY(),sLevel.getObjMainCar(),sLevel.getHighScore(),sLevel.getvCollection(),sLevel.getVehicleCount());
+        a.copyLevel(sLevel.getMap(), sLevel.getUnlocked(), sLevel.getEndX(),
+                sLevel.getEndY(), sLevel.getObjMainCar(), sLevel.getHighScore(), sLevel.getvCollection(), sLevel.getVehicleCount());
 
+
+        t.copyLevel(sLevel.getMap(), sLevel.getUnlocked(), sLevel.getEndX(),
+                sLevel.getEndY(), sLevel.getObjMainCar(), sLevel.getHighScore(), sLevel.getvCollection(),
+                sLevel.getVehicleCount());
 
         Random rand = new Random();
 
@@ -602,7 +683,7 @@ public class LevelPlayViewController {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(!finished) {
+                if (!finished) {
                     ImageView vehicle = (ImageView) event.getSource();
                     //left click is moving down or right
                     if (event.getButton() == MouseButton.PRIMARY) {
@@ -654,13 +735,13 @@ public class LevelPlayViewController {
         myPane.getChildren().add(exit);
 
         Image image = new Image("rhGUI/Images/objCarH.png");
-        if(levelNum+1 == 12){
+        if (levelNum + 1 == 12) {
             image = new Image("rhGUI/Images/batmobile.png");
-        }else if(levelNum+1 == 3){
+        } else if (levelNum + 1 == 3) {
             image = new Image("rhGUI/Images/policecar.png");
-        }else if(levelNum+1 == 6){
+        } else if (levelNum + 1 == 6) {
             image = new Image("rhGUI/Images/ambulance.png");
-        }else if(levelNum+1 == 9){
+        } else if (levelNum + 1 == 9) {
             image = new Image("rhGUI/Images/firetruck.png");
         }
 
@@ -691,27 +772,35 @@ public class LevelPlayViewController {
             }
         }
 
-        if(levelNum+1 == 3 || levelNum+1 == 6 ||levelNum+1 == 9 || levelNum+1 == 12) {
-            timeSeconds.set(60);
-            if(levelNum+1 == 3) {
+        if (levelNum + 1 == 3 || levelNum + 1 == 6 || levelNum + 1 == 9 || levelNum + 1 == 12 || levelNum == 13) {
+
+            if (levelNum + 1 == 3) {
+                timeSeconds.set(60);
                 popUpLevelInformation("In this level you are a police officer. You need \n " +
                         "to pass the EXIT before the bomb explodes.\nPeople's lives are in your hands.");
 
-            }else if (levelNum+1 == 6){
+            } else if (levelNum + 1 == 6) {
+                timeSeconds.set(60);
                 popUpLevelInformation("In this level you are an ambulance driver. You \n need to pass the EXIT in " +
                         "time to save the \npatient. Be quick!");
-            }else if (levelNum+1 == 9){
+            } else if (levelNum + 1 == 9) {
+                timeSeconds.set(60);
                 popUpLevelInformation("In this level you are a firefighter. You \n need to pass the EXIT in time to save" +
                         " lives.");
-            } else if(levelNum+1 == 12){
+            } else if (levelNum + 1 == 12) {
+                timeSeconds.set(60);
 
                 Image spcl = new Image("rhGUI/Images/special12background.jpg");
                 backgroundImg.setImage(spcl);
                 popUpLevelInformation("You are the hero Gotham deserves, but \nnot the one it needs now.");
 
+            } else if (levelNum == 13) {
+                timeSeconds.set(0);
+                System.out.println("he");
+                popUpLevelInformation("Welcome to the tutorial. In this section you will \nlearn how to interact with the game" +
+                        "what your \nobjective is and things that you should consider.");
             }
-        }
-        else {
+        } else {
             timeSeconds.set(STARTTIME);
             startTimer();
         }
